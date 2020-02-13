@@ -1,0 +1,2212 @@
+//Versão Final do Game, testada, funcionando!!
+
+package ProjetoIntegrador;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
+
+public class DarkCasesOfMiddletown {
+	public static void main(String[] args) {
+		char entrar, saida, sair = 0;
+		int retornoMenu;
+
+		// apresentaçao inicial e identificacao do jogador
+		String nome = inicio();
+
+		do {
+			// jogador escolhe opcoes do menu
+			retornoMenu = menu();
+			// a partir do que o usuario digitar ira abrir uma das opcoes abaixo
+			switch (retornoMenu) {
+			// instrucao: regras do jogo, como funciona e suas ordens
+			case 1:
+				instrucao();
+				break;
+			case 2:
+				// o inicio da historia sera apresentada e um convite para ser
+				// detetive será feito
+				char fase1 = introducao(nome);
+				if (fase1 == 's') {
+					// caso o jogador queira iniciar o jogo, sera contada a
+					// historia que antecede a primeira questao do jogo
+					introPrimeiroDesafio();
+					// apos a historia a ser contada, as questoes serao
+					// sorteadas para o jogador responder
+					Random sorteio1 = new Random(1);
+					int respPrimeiroDesafio = primeiroDesafio1();
+					// respPrimeiroDesafio = primeiroDesafio2();
+					if (respPrimeiroDesafio == 'i') {
+						gameOver();
+						System.exit(sair);
+					} else {
+						interacao1(nome);
+						interacao2(nome);
+						interacao3(nome);
+						interacao4(nome);
+						interacao5(nome);
+						interacao6(nome);
+						introSegundoDesafio(nome);
+						Random sorteio2 = new Random(1);
+						int respSegundoDesafio = segundoDesafio1();
+						// respSegundoDesafio = segundoDesafio2();
+						if (respSegundoDesafio == 'i') {
+							gameOver();
+							System.exit(sair);
+						} else {
+							interacao7(nome);
+							interacao8(nome);
+							introTerceiroDesafio(nome);
+							Random sorteio3 = new Random(1);
+							int respTerceiroDesafio = terceiroDesafio1();
+							// respTerceiroDesafio = terceiroDesafio2();
+							if (respTerceiroDesafio == 'i') {
+								gameOver();
+								System.exit(sair);
+							} else {
+								interacao9(nome);
+								interacao10(nome);
+								interacao11(nome);
+								interacao12(nome);
+								interacao13(nome);
+								interacao14(nome);
+								Random sorteio4 = new Random(1);
+								int respQuartoDesafio = quartoDesafio1();
+								// respQuartoDesafio = quartoDesafio2();
+								if (respQuartoDesafio == 'i') {
+									gameOver();
+									System.exit(sair);
+								} else {
+									interacao15(nome);
+									interacao16(nome);
+									introQuintoDesafio(nome);
+									Random sorteio5 = new Random(1);
+									int respQuintoDesafio = quintoDesafio1();
+									// respQuintoDesafio = quintoDesafio2();
+									if (respQuintoDesafio == 'i') {
+										gameOver();
+										System.exit(sair);
+									} else {
+										interacao17(nome);
+										introSextoDesafio(nome);
+										int respSextoDesafio = sextoDesafio1();
+										// int respSextoDesafio =
+										// sextoDesafio2();
+										if (respSextoDesafio == 'i') {
+											gameOver();
+											System.exit(sair);
+										} else {
+											introSetimoDesafio(nome);
+											int respSetimoDesafio = setimoDesafio1();
+											// respSetimoDesafio =
+											// setimoDesafio2();
+											if (respSetimoDesafio == 'i') {
+												gameOver();
+												System.exit(sair);
+											} else {
+												interacao18(nome);
+												interacao19(nome);
+												introOitavoDesafio(nome);
+												int respoitavoDesafio = oitavoDesafio1();
+												// respoitavoDesafio =
+												// oitavoDesafio2();
+												if (respoitavoDesafio == 'i') {
+													gameOver();
+													System.exit(sair);
+												} else {
+													finalizacaoJogo(nome);
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				} else {
+					saida = desistenciaJogador();
+
+					if (saida == 'n') {
+						System.out
+								.println("Você será direcionado novamente para o menu");
+					} else if (saida == 's') {
+						gameOver();
+						System.exit(sair);
+					}
+				}
+				break;
+			// creditos: aqui o usuario sabera quem desenvolvou o jogo
+			case 3:
+				creditos();
+				break;
+			// sair do jogo
+			case 4:
+				gameOver();
+				System.exit(sair);
+				break;
+			// nenhuma das opcoes citadas
+			default:
+				System.out.println("Comando inválido");
+			}
+		} while (retornoMenu != 4);
+		System.exit(sair);
+	}
+
+	static Scanner entrada = new Scanner(System.in);
+
+	static String inicio() {
+		String nomeJogador;
+		System.out
+				.println("  _____             _       _____                            __   __  __ _     _     _ _      _                      \n"
+						+ " |  __ \\           | |     / ____|                          / _| |  \\/  (_)   | |   | | |    | |                     \n"
+						+ " | |  | | __ _ _ __| | __ | |     __ _ ___  ___ ___    ___ | |_  | \\  / |_  __| | __| | | ___| |_ _____      ___ __  \n"
+						+ " | |  | |/ _` | '__| |/ / | |    / _` / __|/ _ / __|  / _ \\|  _| | |\\/| | |/ _` |/ _` | |/ _ | __/ _ \\ \\ /\\ / | '_ \\ \n"
+						+ " | |__| | (_| | |  |   <  | |___| (_| \\__ |  __\\__ \\ | (_) | |   | |  | | | (_| | (_| | |  __| || (_) \\ V  V /| | | |\n"
+						+ " |_____/ \\__,_|_|  |_|\\_\\  \\_____\\__,_|___/\\___|___/  \\___/|_|   |_|  |_|_|\\__,_|\\__,_|_|\\___|\\__\\___/ \\_/\\_/ |_| |_|\n"
+						+ "                                                                                                                     \n"
+						+ "                                                                                                                     ");
+		System.out
+				.println("                ***************************************************************************\n"
+						+ "                 OOOOOOOOOOOOOOOO @@                                    @@ OOOOOOOOOOOOOOOO\n"
+						+ "                 OOOOOOOOOO'''''' @@                                    @@ ```````OOOOOOOOO\n"
+						+ "                 OOOOO'' aaa@@@@@@@@@@@@@@@@@@@@\"\"\"                   \"\"\"\"\"\"\"\"\"@@aaaa `OOOO\n"
+						+ "                 OOOOO,\"\"\"\"@@@@@@@@@@@@@@\"\"\"\"                                     a@\"\" OOOA\n"
+						+ "                 OOOOOOOOOoooooo,                                            |OOoooooOOOOOS\n"
+						+ "                 OOOOOOOOOOOOOOOOo,                                          |OOOOOOOOOOOOC\n"
+						+ "                 OOOOOOOOOOOOOOOOOO                                         ,|OOOOOOOOOOOOI\n"
+						+ "                 OOOOOOOOOOOOOOOOOO @                                       |OOOOOOOOOOOOOI\n"
+						+ "                 OOOOOOOOOOOOOOOOO'@                                        OOOOOOOOOOOOOOb\n"
+						+ "                 OOOOOOOOOOOOOOO'a'                                        |OOOOOOOOOOOOOy\n"
+						+ "                 OOOOOOOOOOOOOO''                                        aa`OOOOOOOOOOOP\n"
+						+ "                 OOOOOOOOOOOOOOb,..                                          `@aa``OOOOOOOh\n"
+						+ "                 OOOOOOOOOOOOOOOOOOo                                           `@@@aa OOOOo\n"
+						+ "                 OOOOOOOOOOOOOOOOOOO|                                             @@@ OOOOe\n"
+						+ "                 OOOOOOOOOOOOOOOOOOO@                               *******       @@',OOOOn\n"
+						+ "                 OOOOOOOOOOOOOOOOOOO@                        aaa@@@@@@@@\"\"        @@ OOOOOi\n"
+						+ "                 OOOOOOOOOO~~ aaaaaa\"a                 aaa@@@@@@@@@@\"\"            @@ OOOOOx\n"
+						+ "                 OOOOOO aaaa@\"\"\"\"\"\"\"\" \"\"            @@@@@@@@@@@@\"\"               @@@|`OOOO'\n"
+						+ "                 OOOOOOOo`@@a                  aa@@  @@@@@@@\"\"         a@        @@@@ OOOO9\n"
+						+ "                 OOOOOOO'  `@@a               @@a@@   @@\"\"           a@@   a     |@@@ OOOO3\n"
+						+ "                 `OOOO'       `@    aa@@       aaa\"\"\"          @a        a@     a@@@',OOOO'\n"
+						+ "                 **************************************************************************\n");
+
+		System.out.print("Digite seu nome: ");
+		nomeJogador = entrada.nextLine();
+		return nomeJogador;
+	}
+
+	static byte menu() {
+		byte menu;
+		/*
+		 * System.out.println("                        ");
+		 * System.out.println("Dê o comando no teclado:");
+		 * System.out.println("1-            INSTRUÇÕES");
+		 * System.out.println("2-                 JOGAR");
+		 * System.out.println("3-              CRÉDITOS");
+		 * System.out.println("4-                  SAIR");
+		 * System.out.println("                        ");
+		 */
+		System.out
+				.println("      _=====_                               _=====_\r\n"
+						+ "     / _____ \\                             / _____ \\\r\n"
+						+ "   +.-'_____'-.---------------------------.-'_____'-.+\r\n"
+						+ "  /   |     |  '.     1- INSTRUÇÕES     .'  |  _  |   \\\r\n"
+						+ " / ___| /|\\ |___ \\                     / ___| /_\\ |___ \\\r\n"
+						+ "/ |      |      | ;  ___        ___   ; | _         _ | ;\r\n"
+						+ "| | <---   ---> | | |_2_|      |_3_:> | ||_|       (_)| |\r\n"
+						+ "| |___   |   ___| ; JOGAR       CRED  ; |___       ___| ;\r\n"
+						+ "|\\    | \\|/ |    /  _     ____     _   \\    | (X) |    /|\r\n"
+						+ "| \\   |_____|  .','\" \"', |_4__| ,'\" \"', '.  |_____|  .' |\r\n"
+						+ "|  '-.______.-' /       \\ SAIR /       \\  '-._____.-'   |\r\n"
+						+ "|               |       |------|       |                |\r\n"
+						+ "|              /\\       /      \\       /\\               |\r\n"
+						+ "|             /  '.___.'        '.___.'  \\              |\r\n"
+						+ "|            /                            \\             |\r\n"
+						+ " \\          /                              \\           /\r\n"
+						+ "  \\________/                                \\_________/\r\n"
+						+ "                          MENU          @DarkCasesOfMiddleTown   ");
+		menu = entrada.nextByte();
+		return menu;
+	}
+
+	static void instrucao() {
+		System.out
+				.println("---------------------------------------------------------------------------------------------------------------------------");
+		System.out
+				.println("Vejo que escolheu a opção 'INSTRUÇÕES' \n"
+						+ "Estamos ansiosos para conhecê-lo!\n"
+						+ "Tomara que façamos progresso. As instruções para o jogo são, inicialmente, muito simples: \n"
+						+ " \nO jogo contém 3 fases:\n"
+						+ "Na primeira fase terão 4 etapas com exercícios de nível fácil da matéria escolhida pelos desenvolvedores do jogo.\n"
+						+ "Na segunda fase terão 3 etapas com exercícios de nível médio.\n"
+						+ "Na terceira fase terá 1 etapa com exercício de nível difícil.\n\n"
+						+ "1°: Ficar atento ao teclado, aos comandos do narrador. \n"
+						+ "2°: Providenciar meios para calcular os problemas a serem resolvidos. \n"
+						+ "3°: Trabalharemos com pistas, e essas pistas serão baseadas na matéria de Conceitos da Computação. \n"
+						+ "4°: Cada desafio contém 3 tentativas, caso exceda esse limite, o criminoso fugirá. \n"
+						+ "5°: Antes de chegar a cada exercício, o jogador deverá interpretar os textos para que as pistas fiquem esclarecidas. \n\n\n"
+						+ "UM ÓTIMO JOGO E BOA SORTE!");
+		System.out
+				.println("                                                                                                                           ");
+		System.out
+				.println("                                                                                          @DarkCasesOfMiddleTown           ");
+		System.out
+				.println("---------------------------------------------------------------------------------------------------------------------------");
+
+	}
+
+	static void creditos() {
+		System.out
+				.println("---------------------------------------------------------------------------------------------------------------------------");
+		System.out
+				.println("Créditos: \n\nProjeto criado por:\n\nMateus Asafe\nRayner Dywdfer\nThyago Rodrigues\nVictor Vilela\n \nAlunos do 1° período "
+						+ "do curso de Análise e Desenvolvimento de Sistemas, 2° semestre de 2019\nCentro Universitário Senac Santo Amaro.\n\n"
+						+ "Criação da história: Rayner e Thyago Rodrigues\nBack End: Thyago Rodrigues e Victor Vilela\nFront End: Thyago Rodrigues\nAscii Art: Mateus Asafe\n");
+		System.out
+				.println("  __\r\n"
+						+ " (`/\\\r\n"
+						+ " `=\\/\\ __...--~~~~~-._   _.-~~~~~--...__\r\n"
+						+ "  `=\\/\\               \\ /               \\\\\r\n"
+						+ "   `=\\/                V                 \\\\\r\n"
+						+ "   //_\\___--~~~~~~-._  |  _.-~~~~~~--...__\\\\\r\n"
+						+ "  //  ) (..----~~~~._\\ | /_.~~~~----.....__\\\\\r\n"
+						+ " ===( DCM )==========\\\\|//====================\r\n"
+						+ "__ejm\\___/________dwb`---`________@DarkCasesOfMiddleTown___________");
+		System.out
+				.println("---------------------------------------------------------------------------------------------------------------------------");
+
+	}
+
+	static char introducao(String nome) {
+		String id = nome;
+		char decisao1;
+		System.out
+				.println("\nBem-vindo, "
+						+ id
+						+ ", ao universo de MiddeTown.\n"
+						+ "Você é o mais novo morador desta cidade pacata, do interior da Inglaterra. O lugar é pequeno, úmido e frio, além de\n"
+						+ "um tanto quanto escuro. Não é raro ser pego de surpresa por uma chuva intensa e rápida.\n"
+						+ "As pessoas têm uma receptividade meio estranha. Não se confia uns nos outros por aqui.\n"
+						+ "A cidade de MiddleTown já foi comum um dia, diz o bonachão Mr. Thomas, dono da\n"
+						+ "padaria. De uns anos pra cá, uma onda de mistérios tomou a cidade. Talvez seja porque\n"
+						+ "a cidadela seja bastante distante das outras 'civilizações'. O que é mais interessante é que\n"
+						+ "os cidadãos ficaram tão frios que parecem não se importarem muito com o que tem havido. \n"
+						+ "Todos no ritmo vagaroso da pacata cidade.\n\n"
+						+ "Bem, o lugar é pitoresco, mas não é tão ruim assim. Tem a Dona Mary, que faz bolos deliciosos,\n"
+						+ "tem a Emilly, que vende flores na esquina da rua Michael, e tem até o taxista, Mr. Patrick, \n"
+						+ "o único da cidade, com seu carro antigo, mas tão bem cuidado que parece novo, pois é tudo o que tem na vida.\n"
+						+ "Alguém me disse (não me pergunte como, meu caro), que você gosta de resolver problemas.\n"
+						+ "Pois então, há dias que a situação da região tem complicado, desde que o Detetive, Sir Watson,\n"
+						+ "homem de extrema elegância, mas que mancava de uma perna (tinha servido o exército e herdou a marca),\n"
+						+ "foi embora. Disse que ia atrás de um velho amigo, que lhe ensinou tudo o que sabia sobre investigações.\n"
+						+ "O fato é que o departamento de polícia da região, comandado pelo delegado Otho, não tem dado conta de resolver\n"
+						+ "casos estranhos e adventícios da região. Foi desde então que o reservado Karl Rahnner, de cuja vida ninguém\n"
+						+ "sabe a respeito, quem assumiu o cargo de Detetive. Não que seu currículo lhe permitisse, uma vez que sua formação\n"
+						+ "se voltava às ciências biológicas. Mas de alguma forma todos sabiam que era vocacionado para tais situações: \n"
+						+ "desvendar enigmas, mistérios, crimes.\n\n"
+						+ "E é aqui onde entra o 'x' da questão: Faço-lhe um convite para que você se junte à cidade, já com uma \n"
+						+ "proposta de emprego. Bem, não é tanto um emprego, é mesmo uma missão. \n"
+						+ "Você terá de tomar o lugar de auxiliar de Karl Rahnner nas investigações e ajudar a desvendar os mistérios da\n"
+						+ "Cidade de MiddleTown.\n"
+						+ "Você deseja iniciar essa jornada agora? (Sim ou Não)");
+		decisao1 = entrada.next().toLowerCase().charAt(0);
+		return decisao1;
+	}
+
+	static void introPrimeiroDesafio() {
+		System.out
+				.println("\nSem mais delongas, vamos aos fatos: É noite chuvosa nas ruas de MiddleTown.\n"
+						+ "O viciado Karl Rahnner bebe um copo de Whisky para acalmar os ânimos enquanto acende seu charuto Hoyo de Monterrey,\n"
+						+ "comprado na venda do auspicioso Ashburn. O corpo soa frio. É comum acontecer a quem é obcecado em resolver problemas.\n\n"
+						+ "Não lhe sai da cabeça os olhos amarelados. Não. Não seria a tradicional morte por hepatite fulminante, uma vez que os punhos \n"
+						+ "encontravam-se cerrados.\n"
+						+ "Mas o intrigara mais o anel, com uma grande pedra de oppenheimer. Sim, aquele diamante azul, aquela que era uma das pedras mais preciosas do mundo,\n"
+						+ "era nela que se encontrava a chave para o problema. Aquela moça estirada, com uma beleza pálida e triste, onde conseguira artefato tão estimável?\n\n"
+						+ "Karl Rahnner, com sua personalidade dubitável e escassez de senso moral, havia pegado, sem que ninguém percebesse,\n"
+						+ "um tablet do local do crime, poucos minutos antes da inspetora Kate Morgan, por quem nitria um respeito desrespeitoso,\n"
+						+ "chegar ao local.\n Rahnner andava em círculos em volta do tablet ao chão , pensando em como iria desvendar o código do aparelho,\n"
+						+ "dado por um problema, envolvendo cálculo de números binários.\n"
+						+ "Nada tão estranho ao astuto detetive, que estudara alguma coisa de informática na época da faculdade, com um vago conhecido\n"
+						+ "que o tinha por amigo.\n"
+						+ "O barulho dos passos era só o que se escutava, enquanto olhava para o código.\n\n"
+						+ "Parece que Karl Rahnner tem algo à sua frente! \nÉ seu dever ajudá-lo a desvendar o mistério. Como você fará? \n");
+	}
+
+	static char primeiroDesafio1() {
+		char primeiraQuestao;
+		int contador = 0;
+
+		boolean acertou = false;
+
+		List alternativas = new ArrayList();
+
+		alternativas.add("784");
+		alternativas.add("4821");
+		alternativas.add("9178");
+		alternativas.add("6721");
+		alternativas.add("8456");
+
+		do {
+			Collections.shuffle(alternativas);
+
+			System.out
+					.println("Para o número: (1 1 0 1 0 0 1 0 0 0 1 0 1) de base binária, ");
+			System.out.println("qual o seu correspondente decimal ? ");
+
+			System.out.println("a) " + alternativas.get(0));
+			System.out.println("b) " + alternativas.get(1));
+			System.out.println("c) " + alternativas.get(2));
+			System.out.println("d) " + alternativas.get(3));
+			System.out.println("e) " + alternativas.get(4));
+			System.out.print("Escolha uma alternativa: ");
+
+			primeiraQuestao = entrada.next().toLowerCase().charAt(0);
+
+			switch (primeiraQuestao) {
+
+			case 'a':
+				if (alternativas.get(0).equals("6721")) {
+					System.out
+							.println("\nResposta correta!\nVocê acertou o código!\n\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base binária, para ver se é decimal.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Leia com atenção: O sistema binário representa os valores com apenas dois algarismo: 0 (zero) ou 1 (um) – ou seja, \n"
+									+ "esse método possui base dois. Essa forma de cálculo, sendo auxiliada pela lógica booleana, é mais simples para a execução das máquinas.\n"
+									+ "O modo mais fácil para você transcrever um número inteiro do sistema decimal para o binário é dividi-lo por dois, anotar o restante (0 ou 1), \n"
+									+ "pegar o quociente e dividi-lo novamente por dois. Faça esse mesmo processo até que o quociente final seja 1 \n"
+									+ "(obrigatoriamente, a última conta deverá ser 2 ÷ 2). Para montar o numeral binário considere o algarismo 1 (essa é uma regra do cálculo) e,\n"
+									+ "depois siga a ordem de zeros e uns de baixo para cima.\n");
+					acertou = true;
+					contador = contador + 1;
+				} else {
+					System.out
+							.println("\nResposta incorreta! Você ainda pode acertar. Segue algumas dicas:\n\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base binária, para ver se é decimal.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Leia com atenção: O sistema binário representa os valores com apenas dois algarismo: 0 (zero) ou 1 (um) – ou seja, \n"
+									+ "esse método possui base dois. Essa forma de cálculo, sendo auxiliada pela lógica booleana, é mais simples para a execução das máquinas.\n"
+									+ "O modo mais fácil para você transcrever um número inteiro do sistema decimal para o binário é dividi-lo por dois, anotar o restante (0 ou 1), \n"
+									+ "pegar o quociente e dividi-lo novamente por dois. Faça esse mesmo processo até que o quociente final seja 1 \n"
+									+ "(obrigatoriamente, a última conta deverá ser 2 ÷ 2). Para montar o numeral binário considere o algarismo 1 (essa é uma regra do cálculo) e,\n"
+									+ "depois siga a ordem de zeros e uns de baixo para cima.\n");
+					contador = contador + 1;
+				}
+				break;
+
+			case 'b':
+				if (alternativas.get(1).equals("6721")) {
+					System.out
+							.println("\nResposta correta!\nVocê acertou o código!\n\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base binária, para ver se é decimal.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Leia com atenção: O sistema binário representa os valores com apenas dois algarismo: 0 (zero) ou 1 (um) – ou seja, \n"
+									+ "esse método possui base dois. Essa forma de cálculo, sendo auxiliada pela lógica booleana, é mais simples para a execução das máquinas.\n"
+									+ "O modo mais fácil para você transcrever um número inteiro do sistema decimal para o binário é dividi-lo por dois, anotar o restante (0 ou 1), \n"
+									+ "pegar o quociente e dividi-lo novamente por dois. Faça esse mesmo processo até que o quociente final seja 1 \n"
+									+ "(obrigatoriamente, a última conta deverá ser 2 ÷ 2). Para montar o numeral binário considere o algarismo 1 (essa é uma regra do cálculo) e,\n"
+									+ "depois siga a ordem de zeros e uns de baixo para cima.\n");
+					acertou = true;
+					contador = contador + 1;
+				} else {
+					System.out
+							.println("\nResposta incorreta! Você ainda pode acertar. Segue algumas dicas:\n\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base binária, para ver se é decimal.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Leia com atenção: O sistema binário representa os valores com apenas dois algarismo: 0 (zero) ou 1 (um) – ou seja, \n"
+									+ "esse método possui base dois. Essa forma de cálculo, sendo auxiliada pela lógica booleana, é mais simples para a execução das máquinas.\n"
+									+ "O modo mais fácil para você transcrever um número inteiro do sistema decimal para o binário é dividi-lo por dois, anotar o restante (0 ou 1), \n"
+									+ "pegar o quociente e dividi-lo novamente por dois. Faça esse mesmo processo até que o quociente final seja 1 \n"
+									+ "(obrigatoriamente, a última conta deverá ser 2 ÷ 2). Para montar o numeral binário considere o algarismo 1 (essa é uma regra do cálculo) e,\n"
+									+ "depois siga a ordem de zeros e uns de baixo para cima.\n");
+					contador = contador + 1;
+				}
+				break;
+
+			case 'c':
+				if (alternativas.get(2).equals("6721")) {
+					System.out
+							.println("\nResposta correta!\nVocê acertou o código!\n\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base binária, para ver se é decimal.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Leia com atenção: O sistema binário representa os valores com apenas dois algarismo: 0 (zero) ou 1 (um) – ou seja, \n"
+									+ "esse método possui base dois. Essa forma de cálculo, sendo auxiliada pela lógica booleana, é mais simples para a execução das máquinas.\n"
+									+ "O modo mais fácil para você transcrever um número inteiro do sistema decimal para o binário é dividi-lo por dois, anotar o restante (0 ou 1), \n"
+									+ "pegar o quociente e dividi-lo novamente por dois. Faça esse mesmo processo até que o quociente final seja 1 \n"
+									+ "(obrigatoriamente, a última conta deverá ser 2 ÷ 2). Para montar o numeral binário considere o algarismo 1 (essa é uma regra do cálculo) e,\n"
+									+ "depois siga a ordem de zeros e uns de baixo para cima.\n");
+					acertou = true;
+					contador = contador + 1;
+				} else {
+					System.out
+							.println("\nResposta incorreta! Você ainda pode acertar. Segue algumas dicas:\n\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base binária, para ver se é decimal.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Leia com atenção: O sistema binário representa os valores com apenas dois algarismo: 0 (zero) ou 1 (um) – ou seja, \n"
+									+ "esse método possui base dois. Essa forma de cálculo, sendo auxiliada pela lógica booleana, é mais simples para a execução das máquinas.\n"
+									+ "O modo mais fácil para você transcrever um número inteiro do sistema decimal para o binário é dividi-lo por dois, anotar o restante (0 ou 1), \n"
+									+ "pegar o quociente e dividi-lo novamente por dois. Faça esse mesmo processo até que o quociente final seja 1 \n"
+									+ "(obrigatoriamente, a última conta deverá ser 2 ÷ 2). Para montar o numeral binário considere o algarismo 1 (essa é uma regra do cálculo) e,\n"
+									+ "depois siga a ordem de zeros e uns de baixo para cima.\n");
+					contador = contador + 1;
+				}
+				break;
+
+			case 'd':
+				if (alternativas.get(3).equals("6721")) {
+					System.out
+							.println("\nResposta correta!\nVocê acertou o código!\n\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base binária, para ver se é decimal.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Leia com atenção: O sistema binário representa os valores com apenas dois algarismo: 0 (zero) ou 1 (um) – ou seja, \n"
+									+ "esse método possui base dois. Essa forma de cálculo, sendo auxiliada pela lógica booleana, é mais simples para a execução das máquinas.\n"
+									+ "O modo mais fácil para você transcrever um número inteiro do sistema decimal para o binário é dividi-lo por dois, anotar o restante (0 ou 1), \n"
+									+ "pegar o quociente e dividi-lo novamente por dois. Faça esse mesmo processo até que o quociente final seja 1 \n"
+									+ "(obrigatoriamente, a última conta deverá ser 2 ÷ 2). Para montar o numeral binário considere o algarismo 1 (essa é uma regra do cálculo) e,\n"
+									+ "depois siga a ordem de zeros e uns de baixo para cima.\n");
+					acertou = true;
+					contador = contador + 1;
+				} else {
+					System.out
+							.println("\nResposta incorreta! Você ainda pode acertar. Segue algumas dicas:\n\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base binária, para ver se é decimal.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Leia com atenção: O sistema binário representa os valores com apenas dois algarismo: 0 (zero) ou 1 (um) – ou seja, \n"
+									+ "esse método possui base dois. Essa forma de cálculo, sendo auxiliada pela lógica booleana, é mais simples para a execução das máquinas.\n"
+									+ "O modo mais fácil para você transcrever um número inteiro do sistema decimal para o binário é dividi-lo por dois, anotar o restante (0 ou 1), \n"
+									+ "pegar o quociente e dividi-lo novamente por dois. Faça esse mesmo processo até que o quociente final seja 1 \n"
+									+ "(obrigatoriamente, a última conta deverá ser 2 ÷ 2). Para montar o numeral binário considere o algarismo 1 (essa é uma regra do cálculo) e,\n"
+									+ "depois siga a ordem de zeros e uns de baixo para cima.\n");
+					contador = contador + 1;
+				}
+				break;
+
+			case 'e':
+				if (alternativas.get(4).equals("6721")) {
+					System.out
+							.println("\nResposta correta!\nVocê acertou o código!\n\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base binária, para ver se é decimal.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desse jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Leia com atenção: O sistema binário representa os valores com apenas dois algarismo: 0 (zero) ou 1 (um) – ou seja, \n"
+									+ "esse método possui base dois. Essa forma de cálculo, sendo auxiliada pela lógica booleana, é mais simples para a execução das máquinas.\n"
+									+ "O modo mais fácil para você transcrever um número inteiro do sistema decimal para o binário é dividi-lo por dois, anotar o restante (0 ou 1), \n"
+									+ "pegar o quociente e dividi-lo novamente por dois. Faça esse mesmo processo até que o quociente final seja 1 \n"
+									+ "(obrigatoriamente, a última conta deverá ser 2 ÷ 2). Para montar o numeral binário considere o algarismo 1 (essa é uma regra do cálculo) e,\n"
+									+ "depois siga a ordem de zeros e uns de baixo para cima.\n");
+					acertou = true;
+					contador = contador + 1;
+				} else {
+					System.out
+							.println("\nResposta incorreta! Você ainda pode acertar. Segue algumas dicas:\n\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base binária, para ver se é decimal.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desse jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Leia com atenção: O sistema binário representa os valores com apenas dois algarismo: 0 (zero) ou 1 (um) – ou seja, \n"
+									+ "esse método possui base dois. Essa forma de cálculo, sendo auxiliada pela lógica booleana, é mais simples para a execução das máquinas.\n"
+									+ "O modo mais fácil para você transcrever um número inteiro do sistema decimal para o binário é dividi-lo por dois, anotar o restante (0 ou 1), \n"
+									+ "pegar o quociente e dividi-lo novamente por dois. Faça esse mesmo processo até que o quociente final seja 1 \n"
+									+ "(obrigatoriamente, a última conta deverá ser 2 ÷ 2). Para montar o numeral binário considere o algarismo 1 (essa é uma regra do cálculo) e,\n"
+									+ "depois siga a ordem de zeros e uns de baixo para cima.\n");
+
+					contador = contador + 1;
+				}
+				break;
+
+			default:
+				System.out.println("\nEscolha inválida!\n");
+				contador = contador + 1;
+				break;
+			}
+		} while (!acertou && contador < 3);
+
+		if (acertou) {
+			System.out.println("Acertou na tentativa: " + contador);
+		} else {
+			primeiraQuestao = 'i';
+			System.out.println("\nIih você usou todas as tentativas\n");
+		}
+
+		return primeiraQuestao;
+	}
+
+	static char desistenciaJogador() {
+		char saida;
+		System.out
+				.println("É uma pena que, a essa altura, você queira postergar. Mas acredito que você tomou uma decisão sábia!\n"
+						+ "Os que adentram esta realidade acabam por se deparar com desafios muitas vezes confusos e inconclusos.\n"
+						+ "Quando se sentir preparado, ficarei feliz em acolhê-lo. Mas segue um aviso: Não retorne se não quiser ser desafiado.\n"
+						+ "Se não estiver disposto a resolver problemas. O universo de MiddleTown é somente para os espíritos fortes.\n"
+						+ " \n"
+						+ "Tem certeza que deseja recusar a proposta? (SIM/NÃO)");
+		saida = entrada.next().toLowerCase().charAt(0);
+		return saida;
+	}
+
+	static void gameOver() {
+		System.out
+				.println("---------------------------------------------------------------------------------------------------------------------------");
+		System.out
+				.println(" _______  _        ______     _______  _______  _______  _______  _ \r\n"
+						+ "(  ____ \\( (    /|(  __  \\   (  ____ \\(  ___  )(       )(  ____ \\( )\r\n"
+						+ "| (    \\/|  \\  ( || (  \\  )  | (    \\/| (   ) || () () || (    \\/| |\r\n"
+						+ "| (__    |   \\ | || |   ) |  | |      | (___) || || || || (__    | |\r\n"
+						+ "|  __)   | (\\ \\) || |   | |  | | ____ |  ___  || |(_)| ||  __)   | |\r\n"
+						+ "| (      | | \\   || |   ) |  | | \\_  )| (   ) || |   | || (      (_)\r\n"
+						+ "| (____/\\| )  \\  || (__/  )  | (___) || )   ( || )   ( || (____/\\ _ \r\n"
+						+ "(_______/|/    )_)(______/   (_______)|/     \\||/     \\|(_______/(_)\r\n"
+						+ "                                                                    ");
+		System.out
+				.println("                                                                                                                           ");
+		System.out
+				.println("                                                                                          @DarkCasesOfMiddleTown           ");
+		System.out
+				.println("---------------------------------------------------------------------------------------------------------------------------");
+	}
+
+	static int interacao1(String nome) {
+		int retornointeracao1;
+		String id = nome;
+		System.out
+				.println("\n"
+						+ "Karl Rahnner encontra-se sentado em sua poltrona. Acende um charuto. Olha em volta.\n"
+						+ "Procura não sei quê. "
+						+ id
+						+ " percebe que ele sugere esperar algo. \n"
+						+ "Ele o observa.\n"
+						+ "Pergunta onde esteve o dia todo.\n\n"
+						+ id
+						+ " olha para Karl Rahnner como quem quisesse pedir a aporvação de algo \n"
+						+ "e lhe dirige a palavra: ");
+		System.out
+				.println("1- 'Consegui!'\n"
+						+ "2- 'Estive o dia todo procurando casas para alugar, por isso estou molhado!'\n"
+						+ "3- 'Fui ao Ashburn comprar charutos!'\n");
+		retornointeracao1 = entrada.nextInt();
+		return retornointeracao1;
+	}
+
+	static int interacao2(String nome) {
+		int retornointeracao2;
+		String id = nome;
+		System.out
+				.println("\n"
+						+ "Karl Rahnner: Ora... Não estás a pensar que eu não sei que descobriu o código do\n"
+						+ "aparelho... está? Venha comigo, meu caro "
+						+ id
+						+ ", tenho algo para lhe mostrar.\n\n"
+						+ "Karl Rahnner segue para as escadas e grita: 'E pegue o tablet!'\n\n"
+						+ id
+						+ " o segue. \n\n"
+						+ "Saem à rua. já está Karl Rahnner dobrando a esquina. Entra na doceria de Dona Mary.\n");
+		System.out.println("1- 'O que veio fazer aqui?'\n"
+				+ "2- 'Pegamos uma pista e você vem à doceria?'\n"
+				+ "3- 'O que há com você?'\n");
+		retornointeracao2 = entrada.nextInt();
+		return retornointeracao2;
+	}
+
+	static int interacao3(String nome) {
+		int retornointeracao3;
+		String id = nome;
+		System.out
+				.println("\n"
+						+ "'Fale mais baixo', sussurra Karl Rahner. 'Eu penso melhor quando como a torta de Mertillo da Dona Mary.\n\n"
+						+ "Já sei! Desbloqueie o aparelho. Deve haver alguma ligação. Procure os últimos contatos.\n\n"
+						+ "Veja se tem algo como Jardineiro ou Jardinagem...'\n");
+		System.out.println("1- Procurar nos contatos\n"
+				+ "2- Ver se tem algum outro vestígio antes, nas fotos\n");
+		retornointeracao3 = entrada.nextInt();
+		return retornointeracao3;
+	}
+
+	static int interacao4(String nome) {
+		int retornointeracao4;
+		String id = nome;
+		System.out
+				.println("\nKarl Rahnner sai da Doceria de Dona Mary. Está já na esquina.\n\n"
+						+ "Anda de lá pra cá, de cá pra lá.\n\n"
+						+ "'Há, sim, pesquisei pelo contato de um jardineiro, de nome Mr. Krown', responde "
+						+ nome
+						+ "\n'Sabia!' Responde Karl. 'Aquele cheiro peculiar, entre o perfume barato; aquela pequena marca, \n"
+						+ "mesmo que apagada, de terra seca. \nVenha "
+						+ nome
+						+ ", encontramos alguma coisa.'\n");
+		System.out.println("1- Para ir até a floricultura\n"
+				+ "2- Para dirigir-se a Karl Rahnner \n");
+		retornointeracao4 = entrada.nextInt();
+		return retornointeracao4;
+	}
+
+	static int interacao5(String nome) {
+		int retornointeracao5;
+		String id = nome;
+		System.out
+				.println("Karl Rahnner e "
+						+ nome
+						+ " vão à floricultura.\n'Muito bem, cá estamos, Mr. Krown.', diz o detetive.\n\n"
+						+ "Mr Krown: 'Olá meus caros! Que bons ventos os trazem?'\n\n"
+						+ "'É uma floricultura interessante', responde Rahnner. 'Há vários espaços em que se poderia esconder algo.'\n\n"
+						+ "'O que disse?'\n\n"
+						+ "'Nada! Pensei que tivesse visto ao longe um macado! Mas me diga, Mr. Krown, o que há por detrás\n"
+						+ "daquela porta com cadeado?'\n\n"
+						+ "Mr. Krown: 'Oh, nada demais, meu caro, apenas algumas velharias!'\n\n"
+						+ "Rahnner: 'Intrigante! Bem, vamos embora, "
+						+ nome
+						+ ", o tempo é muito curto para os que esperam.'\n\n"
+						+ "Já no apartamento...\n"
+						+ "É tarde. O sereno vespertino já se vai ao longe.\n"
+						+ "A noite se abre, e Karl Rahnner, na ansiedade de sempre, arruma-se para sair.\n\n"
+						+ "'Mas a essa hora?', pergunta "
+						+ nome
+						+ ".\n\n"
+						+ "Karl Rahnner: Ora, é à noite que conseguiremos descobrir a ligação entre o nosso\r\n"
+						+ "jardineiro e a suntuosa e triste moça morta naquele apartamento.' Grita de longe: 'E traga o pé de cabra!'\n");
+		System.out.println("1- Correr e pegar o pé-de-cabra\n"
+				+ "2- Descer zangado por não ter encontrado o pé-de-cabra\n");
+		retornointeracao5 = entrada.nextInt();
+		return retornointeracao5;
+	}
+
+	static int interacao6(String nome) {
+		int retornointeracao6;
+		System.out
+				.println("\nChegam à floricultura...\nTentam não fazer barulho...\n"
+						+ nome
+						+ " tropeça em um galho qualquer.\n\n'Psiu! Quer que sejamos descobertos?' sussurra Karl Rahnner.\n\n"
+						+ "Estão diante da porta.\n\nKarl Rahnner: 'onde está o pé-de-cabra?'\n");
+		System.out
+				.println("1- 'Acho que você esqueceu de me contar um detalhe: onde fica o pé-de-cabra.'\n"
+						+ "2- 'Está aqui!'\n");
+		retornointeracao6 = entrada.nextInt();
+		return retornointeracao6;
+	}
+
+	static void introSegundoDesafio(String nome) {
+		System.out
+				.println("\nDepois de algumas tentativas, pois força não era muito seu forte, o astuto detetive abre a porta\n"
+						+ "O local é escuro. O detetive saca uma lanterna do sobretudo. É frio. Há uma luz azul a uma distância considerável.\n\n"
+						+ "'Cuidado para nao derrubar nada!', diz Rahnner.\n\n"
+						+ "Chegam à tal luz azul. Trata-se de algo futurista. É uma porta cromada, com números no meio.\n"
+						+ "Ao que parece, precisa de senha para entrar.\r\n"
+						+ "\n"
+						+ "Karl Rahnner olha para "
+						+ nome
+						+ ".\n\n"
+						+ "'Bem sei dos seus dotes com informática. Tente a sorte...'\n");
+	}
+
+	static char segundoDesafio1() {
+		char segundaQuestao;
+		int contador = 0;
+
+		boolean acertou = false;
+
+		List alternativas = new ArrayList();
+
+		alternativas.add("10100110");
+		alternativas.add("10011010");
+		alternativas.add("10010101");
+		alternativas.add("10001010");
+		alternativas.add("1111101");
+
+		do {
+			Collections.shuffle(alternativas);
+
+			System.out.println("Para o número: (166) de base decimal, ");
+			System.out.println("qual o seu correspondente binário ? ");
+
+			System.out.println("a) " + alternativas.get(0));
+			System.out.println("b) " + alternativas.get(1));
+			System.out.println("c) " + alternativas.get(2));
+			System.out.println("d) " + alternativas.get(3));
+			System.out.println("e) " + alternativas.get(4));
+			System.out.print("Escolha uma alternativa: ");
+
+			segundaQuestao = entrada.next().toLowerCase().charAt(0);
+
+			switch (segundaQuestao) {
+
+			case 'a':
+				if (alternativas.get(0).equals("10100110")) {
+					System.out
+							.println("\nResposta correta!\nVocê acertou o código!\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base decimal, para ver qual o correspondente em base binária.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Leia com atenção: O sistema binário representa os valores com apenas dois algarismo: 0 (zero) ou 1 (um) – ou seja, \n"
+									+ "esse método possui base dois. Essa forma de cálculo, sendo auxiliada pela lógica booleana, é mais simples para a execução das máquinas.\n"
+									+ "O modo mais fácil para você transcrever um número inteiro do sistema decimal para o binário é dividi-lo por dois, anotar o restante (0 ou 1), \n"
+									+ "pegar o quociente e dividi-lo novamente por dois. Faça esse mesmo processo até que o quociente final seja 1 \n"
+									+ "(obrigatoriamente, a última conta deverá ser 2 ÷ 2). Para montar o numeral binário considere o algarismo 1 (essa é uma regra do cálculo) e,\n"
+									+ "depois siga a ordem de zeros e uns de baixo para cima.\n");
+					acertou = true;
+					contador = contador + 1;
+				} else {
+					System.out
+							.println("\nResposta incorreta! Você ainda pode acertar. Segue algumas dicas:\n\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base decimal, para ver qual o correspondente em base binária.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Leia com atenção: O sistema binário representa os valores com apenas dois algarismo: 0 (zero) ou 1 (um) – ou seja, \n"
+									+ "esse método possui base dois. Essa forma de cálculo, sendo auxiliada pela lógica booleana, é mais simples para a execução das máquinas.\n"
+									+ "O modo mais fácil para você transcrever um número inteiro do sistema decimal para o binário é dividi-lo por dois, anotar o restante (0 ou 1), \n"
+									+ "pegar o quociente e dividi-lo novamente por dois. Faça esse mesmo processo até que o quociente final seja 1 \n"
+									+ "(obrigatoriamente, a última conta deverá ser 2 ÷ 2). Para montar o numeral binário considere o algarismo 1 (essa é uma regra do cálculo) e,\n"
+									+ "depois siga a ordem de zeros e uns de baixo para cima.\n");
+					contador = contador + 1;
+				}
+				break;
+
+			case 'b':
+				if (alternativas.get(1).equals("10100110")) {
+					System.out
+							.println("\nResposta correta!\nVocê acertou o código!\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base decimal, para ver qual o correspondente em base binária.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Leia com atenção: O sistema binário representa os valores com apenas dois algarismo: 0 (zero) ou 1 (um) – ou seja, \n"
+									+ "esse método possui base dois. Essa forma de cálculo, sendo auxiliada pela lógica booleana, é mais simples para a execução das máquinas.\n"
+									+ "O modo mais fácil para você transcrever um número inteiro do sistema decimal para o binário é dividi-lo por dois, anotar o restante (0 ou 1), \n"
+									+ "pegar o quociente e dividi-lo novamente por dois. Faça esse mesmo processo até que o quociente final seja 1 \n"
+									+ "(obrigatoriamente, a última conta deverá ser 2 ÷ 2). Para montar o numeral binário considere o algarismo 1 (essa é uma regra do cálculo) e,\n"
+									+ "depois siga a ordem de zeros e uns de baixo para cima.\n");
+					acertou = true;
+					contador = contador + 1;
+				} else {
+					System.out
+							.println("\nResposta incorreta! Você ainda pode acertar. Segue algumas dicas:\n\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base decimal, para ver qual o correspondente em base binária.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Leia com atenção: O sistema binário representa os valores com apenas dois algarismo: 0 (zero) ou 1 (um) – ou seja, \n"
+									+ "esse método possui base dois. Essa forma de cálculo, sendo auxiliada pela lógica booleana, é mais simples para a execução das máquinas.\n"
+									+ "O modo mais fácil para você transcrever um número inteiro do sistema decimal para o binário é dividi-lo por dois, anotar o restante (0 ou 1), \n"
+									+ "pegar o quociente e dividi-lo novamente por dois. Faça esse mesmo processo até que o quociente final seja 1 \n"
+									+ "(obrigatoriamente, a última conta deverá ser 2 ÷ 2). Para montar o numeral binário considere o algarismo 1 (essa é uma regra do cálculo) e,\n"
+									+ "depois siga a ordem de zeros e uns de baixo para cima.\n");
+					contador = contador + 1;
+				}
+				break;
+
+			case 'c':
+				if (alternativas.get(2).equals("10100110")) {
+					System.out
+							.println("\nResposta correta!\nVocê acertou o código!\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base decimal, para ver qual o correspondente em base binária.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Leia com atenção: O sistema binário representa os valores com apenas dois algarismo: 0 (zero) ou 1 (um) – ou seja, \n"
+									+ "esse método possui base dois. Essa forma de cálculo, sendo auxiliada pela lógica booleana, é mais simples para a execução das máquinas.\n"
+									+ "O modo mais fácil para você transcrever um número inteiro do sistema decimal para o binário é dividi-lo por dois, anotar o restante (0 ou 1), \n"
+									+ "pegar o quociente e dividi-lo novamente por dois. Faça esse mesmo processo até que o quociente final seja 1 \n"
+									+ "(obrigatoriamente, a última conta deverá ser 2 ÷ 2). Para montar o numeral binário considere o algarismo 1 (essa é uma regra do cálculo) e,\n"
+									+ "depois siga a ordem de zeros e uns de baixo para cima.\n");
+					acertou = true;
+					contador = contador + 1;
+				} else {
+					System.out
+							.println("\nResposta incorreta! Você ainda pode acertar. Segue algumas dicas:\n\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base decimal, para ver qual o correspondente em base binária.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Leia com atenção: O sistema binário representa os valores com apenas dois algarismo: 0 (zero) ou 1 (um) – ou seja, \n"
+									+ "esse método possui base dois. Essa forma de cálculo, sendo auxiliada pela lógica booleana, é mais simples para a execução das máquinas.\n"
+									+ "O modo mais fácil para você transcrever um número inteiro do sistema decimal para o binário é dividi-lo por dois, anotar o restante (0 ou 1), \n"
+									+ "pegar o quociente e dividi-lo novamente por dois. Faça esse mesmo processo até que o quociente final seja 1 \n"
+									+ "(obrigatoriamente, a última conta deverá ser 2 ÷ 2). Para montar o numeral binário considere o algarismo 1 (essa é uma regra do cálculo) e,\n"
+									+ "depois siga a ordem de zeros e uns de baixo para cima.\n");
+					contador = contador + 1;
+				}
+				break;
+
+			case 'd':
+				if (alternativas.get(3).equals("10100110")) {
+					System.out
+							.println("\nResposta correta!\nVocê acertou o código!\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base decimal, para ver qual o correspondente em base binária.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Leia com atenção: O sistema binário representa os valores com apenas dois algarismo: 0 (zero) ou 1 (um) – ou seja, \n"
+									+ "esse método possui base dois. Essa forma de cálculo, sendo auxiliada pela lógica booleana, é mais simples para a execução das máquinas.\n"
+									+ "O modo mais fácil para você transcrever um número inteiro do sistema decimal para o binário é dividi-lo por dois, anotar o restante (0 ou 1), \n"
+									+ "pegar o quociente e dividi-lo novamente por dois. Faça esse mesmo processo até que o quociente final seja 1 \n"
+									+ "(obrigatoriamente, a última conta deverá ser 2 ÷ 2). Para montar o numeral binário considere o algarismo 1 (essa é uma regra do cálculo) e,\n"
+									+ "depois siga a ordem de zeros e uns de baixo para cima.\n");
+					acertou = true;
+					contador = contador + 1;
+				} else {
+					System.out
+							.println("\nResposta incorreta! Você ainda pode acertar. Segue algumas dicas:\n\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base decimal, para ver qual o correspondente em base binária.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Leia com atenção: O sistema binário representa os valores com apenas dois algarismo: 0 (zero) ou 1 (um) – ou seja, \n"
+									+ "esse método possui base dois. Essa forma de cálculo, sendo auxiliada pela lógica booleana, é mais simples para a execução das máquinas.\n"
+									+ "O modo mais fácil para você transcrever um número inteiro do sistema decimal para o binário é dividi-lo por dois, anotar o restante (0 ou 1), \n"
+									+ "pegar o quociente e dividi-lo novamente por dois. Faça esse mesmo processo até que o quociente final seja 1 \n"
+									+ "(obrigatoriamente, a última conta deverá ser 2 ÷ 2). Para montar o numeral binário considere o algarismo 1 (essa é uma regra do cálculo) e,\n"
+									+ "depois siga a ordem de zeros e uns de baixo para cima.\n");
+					contador = contador + 1;
+				}
+				break;
+
+			case 'e':
+				if (alternativas.get(4).equals("10100110")) {
+					System.out
+							.println("\nResposta correta!\nVocê acertou o código!\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base decimal, para ver qual o correspondente em base binária.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Leia com atenção: O sistema binário representa os valores com apenas dois algarismo: 0 (zero) ou 1 (um) – ou seja, \n"
+									+ "esse método possui base dois. Essa forma de cálculo, sendo auxiliada pela lógica booleana, é mais simples para a execução das máquinas.\n"
+									+ "O modo mais fácil para você transcrever um número inteiro do sistema decimal para o binário é dividi-lo por dois, anotar o restante (0 ou 1), \n"
+									+ "pegar o quociente e dividi-lo novamente por dois. Faça esse mesmo processo até que o quociente final seja 1 \n"
+									+ "(obrigatoriamente, a última conta deverá ser 2 ÷ 2). Para montar o numeral binário considere o algarismo 1 (essa é uma regra do cálculo) e,\n"
+									+ "depois siga a ordem de zeros e uns de baixo para cima.\n");
+					acertou = true;
+					contador = contador + 1;
+				} else {
+					System.out
+							.println("\nResposta incorreta! Você ainda pode acertar. Segue algumas dicas:\n\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base decimal, para ver qual o correspondente em base binária.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Leia com atenção: O sistema binário representa os valores com apenas dois algarismo: 0 (zero) ou 1 (um) – ou seja, \n"
+									+ "esse método possui base dois. Essa forma de cálculo, sendo auxiliada pela lógica booleana, é mais simples para a execução das máquinas.\n"
+									+ "O modo mais fácil para você transcrever um número inteiro do sistema decimal para o binário é dividi-lo por dois, anotar o restante (0 ou 1), \n"
+									+ "pegar o quociente e dividi-lo novamente por dois. Faça esse mesmo processo até que o quociente final seja 1 \n"
+									+ "(obrigatoriamente, a última conta deverá ser 2 ÷ 2). Para montar o numeral binário considere o algarismo 1 (essa é uma regra do cálculo) e,\n"
+									+ "depois siga a ordem de zeros e uns de baixo para cima.\n");
+					contador = contador + 1;
+				}
+				break;
+
+			default:
+				System.out.println("\nEscolha inválida!\n");
+				contador = contador + 1;
+				break;
+			}
+		} while (!acertou && contador < 3);
+
+		if (acertou) {
+			System.out.println("Acertou na tentativa: " + contador);
+		} else {
+			segundaQuestao = 'i';
+			System.out.println("\nIih você usou todas as tentativas\n");
+		}
+
+		return segundaQuestao;
+	}
+
+	static int interacao7(String nome) {
+		int retornointeracao7;
+		System.out
+				.println("\nParabéns! Você ajudou a chegar na próxima pista, que leva à solução desse crime.\n\n"
+						+ "Voltemos aos fatos!\n"
+						+ "Karl Rahnner, junto de seu assistente "
+						+ nome
+						+ ", entram na sala.\n"
+						+ "Está tudo escuro.\n"
+						+ "Há várias máquinas, vidros com experimentos de várias cores.\n"
+						+ "A luz acende.\n\n"
+						+ "Ao final, intrigante, aparece um quadro branco, com uma cadeia de fotos. Nada escrito.\n"
+						+ "O que chama a atenção é que há uma foto no centro do quadro, maior do que as outras.\n"
+						+ "É a foto e Karl Rahnner; ao lado de outra foto um pouco menor, do taxista da cidade.\n"
+						+ "'Interessante!', exprime Karl Rahnner. 'Colocam-nos como vítimas. Será que somos os próximos?'\n\n"
+						+ "Rahnner vai à sua casa e pensa um pouco...\nColoca um disco de Tchaikovsky para tocar, pois era algo que o relaxava...\n\n"
+						+ nome + " pergunta a Karl Rahnner:\n");
+		System.out.println("1- 'O que vamos fazer agora?'\n"
+				+ "2- 'Por que ainda estamos aqui parados? Temos de agir!'\n");
+		retornointeracao7 = entrada.nextInt();
+		return retornointeracao7;
+	}
+
+	static int interacao8(String nome) {
+		int retornointeracao7;
+		System.out
+				.println("\nKarl Rahnner: Espere um pouco,"
+						+ nome
+						+ ". Preciso pensar!\n\n"
+						+ "PENSA UM POUCO...\n\n"
+						+ "Lógico! Mr. Thomas! Vamos, venha! Vamos tirar essa história a limpo!\n"
+						+ "Já na rua.\n"
+						+ "Rahnner andava, rápido e pensativo. Em um determinado ponto da rua, esgueirou-se em\n"
+						+ "um arbusto.\n"
+						+ "Rahnner enxerga o taxista parado na esquina, fumando seu charuto de rotina, que\n"
+						+ "contém um cheiro diferente do habitual. O taxista estava como que prestando atenção em algo.\n"
+						+ "Karl Rahnner nota que ele fica durante mais ou menos uma hora naquela esquina, e num\n"
+						+ "determinado momento vai embora.\n"
+						+ "Percebem ainda algo estranho: logo após Mr. Patrick sair da esquina, o delegado de\n"
+						+ "polícia, que ia sempre ao mesmo horário na doceria de Dona Mary, sai do estabelecimento.\n"
+						+ "Qual será a relação de Patrick, a doceria de Dona Mary e o delegado de polícia?\n");
+		System.out.println("1- Devo interrogar um deles?\n"
+				+ "2- Será que começo a segui-los até encontrar algo?\n");
+		retornointeracao7 = entrada.nextInt();
+		return retornointeracao7;
+	}
+
+	static void introTerceiroDesafio(String nome) {
+		System.out
+				.println("\nKarl Rahnner vai ao outro lado da rua. "
+						+ nome
+						+ " acha estranho sua atitude. Mas ele continua.\n"
+						+ "Vai até o chão e colhe um charuto usado. Diz respeito a uma marca que ele mesmo não conhecia.\n\n"
+						+ "Há algo de diferente aqui.\n\n"
+						+ "Para descobrir a marca do charuto, foi preciso acessar a internet,\n"
+						+ "por meio do tablet da vítima, para examinar um conjunto numérico desenhado no próprio charuto.\n"
+						+ "Os números formavam o seguinte código base decimal: 6 4 2 0 6\n"
+						+ "Passe a numeração de base decimal para base hexadecimal: \n");
+	}
+
+	static char terceiroDesafio1() {
+		char terceiraQuestao;
+		int contador = 0;
+
+		boolean acertou = false;
+
+		List alternativas = new ArrayList();
+
+		alternativas.add("ECAF");
+		alternativas.add("FACA");
+		alternativas.add("FACE");
+		alternativas.add("CAFE");
+		alternativas.add("FECA");
+
+		do {
+			Collections.shuffle(alternativas);
+
+			System.out.println("Para o número: (64206) de base decimal, ");
+			System.out.println("qual o seu correspondente em hexadecimal ? ");
+
+			System.out.println("a) " + alternativas.get(0));
+			System.out.println("b) " + alternativas.get(1));
+			System.out.println("c) " + alternativas.get(2));
+			System.out.println("d) " + alternativas.get(3));
+			System.out.println("e) " + alternativas.get(4));
+			System.out.print("Escolha uma alternativa: ");
+
+			terceiraQuestao = entrada.next().toLowerCase().charAt(0);
+
+			switch (terceiraQuestao) {
+
+			case 'a':
+				if (alternativas.get(0).equals("FACE")) {
+					System.out
+							.println("\nResposta correta!\nVocê acertou o código!\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base decimal para hexadecimal.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Para fazer este tipo de conversão é simples. Pegue um número hexadecimal qualquer. Vamos pegar o A37E, por exemplo. \n"
+									+ "Agora escreva um número por linha e faça para o primeiro número x16 elevado a 0, depois x16 elevado a 1… e assim até chegar ao último número.\n"
+									+ "Depois some os resultados e você terá o resultado.\n");
+					acertou = true;
+					contador = contador + 1;
+				} else {
+					System.out
+							.println("\nResposta incorreta! Mas acho que podemos ajudá-lo.\n"
+									+ "Provavelmente você teve de calcular à mão o número de base decimal para hexadecimal.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Para fazer este tipo de conversão é simples. Pegue um número hexadecimal qualquer. Vamos pegar o A37E, por exemplo. \n"
+									+ "Agora escreva um número por linha e faça para o primeiro número x16 elevado a 0, depois x16 elevado a 1… e assim até chegar ao último número.\n"
+									+ "Depois some os resultados e você terá o resultado.\n");
+					contador = contador + 1;
+				}
+				break;
+
+			case 'b':
+				if (alternativas.get(1).equals("FACE")) {
+					System.out
+							.println("\nResposta correta!\nVocê acertou o código!\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base decimal para hexadecimal.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Para fazer este tipo de conversão é simples. Pegue um número hexadecimal qualquer. Vamos pegar o A37E, por exemplo. \n"
+									+ "Agora escreva um número por linha e faça para o primeiro número x16 elevado a 0, depois x16 elevado a 1… e assim até chegar ao último número.\n"
+									+ "Depois some os resultados e você terá o resultado.\n");
+					acertou = true;
+					contador = contador + 1;
+				} else {
+					System.out
+							.println("\nResposta incorreta! Mas acho que podemos ajudá-lo.\n"
+									+ "Provavelmente você teve de calcular à mão o número de base decimal para hexadecimal.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Para fazer este tipo de conversão é simples. Pegue um número hexadecimal qualquer. Vamos pegar o A37E, por exemplo. \n"
+									+ "Agora escreva um número por linha e faça para o primeiro número x16 elevado a 0, depois x16 elevado a 1… e assim até chegar ao último número.\n"
+									+ "Depois some os resultados e você terá o resultado.\n");
+					contador = contador + 1;
+				}
+				break;
+
+			case 'c':
+				if (alternativas.get(2).equals("FACE")) {
+					System.out
+							.println("\nResposta correta!\nVocê acertou o código!\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base decimal para hexadecimal.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Para fazer este tipo de conversão é simples. Pegue um número hexadecimal qualquer. Vamos pegar o A37E, por exemplo. \n"
+									+ "Agora escreva um número por linha e faça para o primeiro número x16 elevado a 0, depois x16 elevado a 1… e assim até chegar ao último número.\n"
+									+ "Depois some os resultados e você terá o resultado.\n");
+					acertou = true;
+					contador = contador + 1;
+				} else {
+					System.out
+							.println("\nResposta incorreta! Mas acho que podemos ajudá-lo.\n"
+									+ "Provavelmente você teve de calcular à mão o número de base decimal para hexadecimal.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Para fazer este tipo de conversão é simples. Pegue um número hexadecimal qualquer. Vamos pegar o A37E, por exemplo. \n"
+									+ "Agora escreva um número por linha e faça para o primeiro número x16 elevado a 0, depois x16 elevado a 1… e assim até chegar ao último número.\n"
+									+ "Depois some os resultados e você terá o resultado.\n");
+					contador = contador + 1;
+				}
+				break;
+
+			case 'd':
+				if (alternativas.get(3).equals("FACE")) {
+					System.out
+							.println("\nResposta correta!\nVocê acertou o código!\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base decimal para hexadecimal.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Para fazer este tipo de conversão é simples. Pegue um número hexadecimal qualquer. Vamos pegar o A37E, por exemplo. \n"
+									+ "Agora escreva um número por linha e faça para o primeiro número x16 elevado a 0, depois x16 elevado a 1… e assim até chegar ao último número.\n"
+									+ "Depois some os resultados e você terá o resultado.\n");
+					acertou = true;
+					contador = contador + 1;
+				} else {
+					System.out
+							.println("\nResposta incorreta! Mas acho que podemos ajudá-lo.\n"
+									+ "Provavelmente você teve de calcular à mão o número de base decimal para hexadecimal.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Para fazer este tipo de conversão é simples. Pegue um número hexadecimal qualquer. Vamos pegar o A37E, por exemplo. \n"
+									+ "Agora escreva um número por linha e faça para o primeiro número x16 elevado a 0, depois x16 elevado a 1… e assim até chegar ao último número.\n"
+									+ "Depois some os resultados e você terá o resultado.\n");
+					contador = contador + 1;
+				}
+				break;
+
+			case 'e':
+				if (alternativas.get(4).equals("FACE")) {
+					System.out
+							.println("\nResposta correta!\nVocê acertou o código!\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base decimal para hexadecimal.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Para fazer este tipo de conversão é simples. Pegue um número hexadecimal qualquer. Vamos pegar o A37E, por exemplo. \n"
+									+ "Agora escreva um número por linha e faça para o primeiro número x16 elevado a 0, depois x16 elevado a 1… e assim até chegar ao último número.\n"
+									+ "Depois some os resultados e você terá o resultado.\n");
+					acertou = true;
+					contador = contador + 1;
+				} else {
+					System.out
+							.println("\nResposta incorreta! Mas acho que podemos ajudá-lo.\n"
+									+ "Provavelmente você teve de calcular à mão o número de base decimal para hexadecimal.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Para fazer este tipo de conversão é simples. Pegue um número hexadecimal qualquer. Vamos pegar o A37E, por exemplo. \n"
+									+ "Agora escreva um número por linha e faça para o primeiro número x16 elevado a 0, depois x16 elevado a 1… e assim até chegar ao último número.\n"
+									+ "Depois some os resultados e você terá o resultado.\n");
+					contador = contador + 1;
+				}
+				break;
+
+			default:
+				System.out.println("\nEscolha inválida!\n");
+				contador = contador + 1;
+				break;
+			}
+		} while (!acertou && contador < 3);
+
+		if (acertou) {
+			System.out.println("Acertou na tentativa: " + contador);
+		} else {
+			terceiraQuestao = 'i';
+			System.out.println("\nIih você usou todas as tentativas\n");
+		}
+
+		return terceiraQuestao;
+	}
+
+	static int interacao9(String nome) {
+		int retornointeracao9;
+		System.out
+				.println("\nPARABÉNS! VOCÊ DESCOBRIU: A marca do charuto.\n\n"
+						+ "Karl Rahnner ainda não houvera se deparado com essa marca.\n"
+						+ "Fica intrigado. Entra na doceria. De sopetão, acende-se-lhe uma luz.\n"
+						+ "'Oh céus', disse ele. 'Está acontecendo algo', "
+						+ nome
+						+ ".'\n"
+						+ "\nNa doceria está está sendo noticiado na TV uma entrevista com o diretor do museu de Londres. Uma joia de Oppenheimer,\n"
+						+ "que houvera sido roubada do museu da cidade, distante de MiddleTown.\n\n"
+						+ "Karl Rahnner: 'Preciso pensar. Vou fumar um charuto. Mas os meus acabaram. Você\n"
+						+ "gostaria de me acompanhar e conhecer a tabacaria de Mr. Ashburn, "
+						+ nome + "?'\n");
+		System.out.println("1- Claro!\n" + "2- Não, mas fazer o que, né?\n");
+		retornointeracao9 = entrada.nextInt();
+		return retornointeracao9;
+	}
+
+	static int interacao10(String nome) {
+		int retornointeracao10;
+		System.out
+				.println("\nKarl Rahnner chama um táxi. 'Você gosta de charuto?', pergunta ao taxista.\n"
+						+ "\n'Gosto', responde o taxista.\n\n"
+						+ "'Você me recomendaria algum?', pergunta novamente Rahnner.\n\n"
+						+ "'Sim, meu caro. Mas o Mr. Ashburn é especialista. Certamente poderá indicar melhor do que eu'.\n"
+						+ "\nKarl Rahnner balança a cabeça, com certo ar de sarcasmo.\n"
+						+ "Chegam à tabacaria.\n\n"
+						+ "'Mr. Ashburn, conheço o Senhor há quanto tempo?', pergunta Rahnner.\n"
+						+ "\n'Muito!', responde Ashburn.\n\n'Este aqui, de nome esquisito, qual a procedência? Vem de sua loja?'\n"
+						+ "\n'Sim, pois, esses charutos são preciosos. Possuo pouquíssima quantidade. Há só um\n"
+						+ "cliente fiel que adquire esses charutos com certa frequência.'\n"
+						+ "\n'Ora, que bom gosto tem esse cliente, não é mesmo, "
+						+ nome
+						+ "? E quem seria o\n"
+						+ "tal cliente?'\n\n"
+						+ "Mr. Ashburn: 'Pois sim, é o taxista da cidade, Mr. Patrick.'\n");
+		System.out.println("1- Entendi!\n" + "2- Vamos embora, " + nome
+				+ ", temos muito o que fazer!\n");
+		retornointeracao10 = entrada.nextInt();
+		return retornointeracao10;
+	}
+
+	static int interacao11(String nome) {
+		int retornointeracao11;
+		System.out
+				.println("\nKarl Rahnner vai em direção à floricultura. Ao chegar, percebe, no\n"
+						+ "balcão, algumas cartas. Rahnner pergunta à recepcionista, Emilly, que vende\n"
+						+ "flores na esquina da rua Michael: 'Você tem rosas violetas?'\n"
+						+ "\nA moça vai buscar as rosas, enquanto o detetive abre uma das cartas e lá que há uma\n"
+						+ "ordem de despejo para a floricultura, uma vez que estava à falência.\n"
+						+ "\nMuito interessante! diz Rahnner. Temos ainda mais a fazer! Vamos embora!\n"
+						+ "\nAo sair, o detetive pisa em algo que faz barulho. Era um plástico, de um charuto, escrito:\n"
+						+ "FACE.\n");
+		System.out
+				.println("1- Ora ora, o que temos aqui?\n2- Vamos entrar para ver o que acontece...\n");
+		retornointeracao11 = entrada.nextInt();
+		return retornointeracao11;
+	}
+
+	static int interacao12(String nome) {
+		int retornointeracao12;
+		System.out
+				.println("\nNeste momento, o jardineiro entra na loja. Eles o abordam.\n"
+						+ "Karl Rahnner se dirige ao jardineiro com a ordem de despejo na mão.\n"
+						+ "\n'Que documento é esse?', diz o jardineiro.\n\n"
+						+ "'Ora, é o documento de ordem de despejo de sua floricultura.' Então quer dizer, meu caro,\r\n"
+						+ "que você está à beira da falência e ainda está com sorriso nos olhos? Como você\r\n"
+						+ "esperava pagar essa dívida? De onde viria esse dinheiro?\r\n"
+						+ "\n"
+						+ "Jardineiro: Estou desesperado. Não sei ainda como vou pagar. Mas preciso tentar.\r\n"
+						+ "Porque às vezes a vida é dura. Você recebe choques e mais choques. Parece que\r\n"
+						+ "querem derrubar o mundo sobre sua cabeça. Por isso, sempre sorria.\r\n\n"
+						+ "O taxista chega e vê o jardineiro em desespero. Ele pensa que o jardineiro está contando\r\n"
+						+ "certas coisas que não quer que conte.\r\n");
+		System.out
+				.println("1- O que está acontecendo aqui?\n2- É melhor evitar conflitos...\n");
+		retornointeracao12 = entrada.nextInt();
+		return retornointeracao12;
+	}
+
+	static int interacao13(String nome) {
+		int retornointeracao13;
+		System.out
+				.println("\nO jardineiro responde: 'Chega, Patrick. Não aguento mais.'\n\n"
+						+ "Karl Rahnner: 'Não aguenta mais o que?' Muito embora já soubesse o que estava acontecendo.\n\n"
+						+ "O taxista olha para o jardineiro e diz: 'Ora seu... canalha! Você vai ver...'\n\n"
+						+ "O taxista, desesperado e com raiva do jardineiro, saca sua arma e atira pra cima. \n"
+						+ "O jardineiro corre de medo e se esconde. Karl Rahnner, vendo o momento, corre para tentar\n"
+						+ "desarmar o taxista, jogando seu corpo ao chão. A arma cai longe do taxista. \n"
+						+ "O assistente ajuda para atordoa-lo. \n\n"
+						+ "Alguém que passava na rua chama a polícia.\n\n"
+						+ "Nesse momento, "
+						+ nome
+						+ " percebe algo: há um papel, como que um bilhete no bolso do blazer de Mr. Patrick. "
+						+ nome
+						+ " acena para Karl Rahnner, que pega o bilhete do bolso.\n\n"
+						+ "A polícia chega.\n");
+		System.out
+				.println("1- Até que enfim chegou alguém para pôr cabo a este conflito.\n"
+						+ "2- Quero mais é ver o circo pegar fogo!\n");
+		retornointeracao13 = entrada.nextInt();
+		return retornointeracao13;
+	}
+
+	static int interacao14(String nome) {
+		int retornointeracao14;
+		System.out
+				.println("\nExamina seu carro e o leva para depôr junto com o jardineiro.\n\n"
+						+ "Acham sangue em seu carro.\nO taxista admite os crimes cometidos.\n\n"
+						+ "Conta o taxista: 'Eu mesmo fui o mandante do assalto ao museu em Londres. \n"
+						+ "A joia deOpenheimer seria para dividir o dinheiro entre o jardineiro, \n"
+						+ "a moça - que foi a assaltante - e eu. O jardineiro, para quitar sua dívida, eu, para comprar uma nova frota de taxis\n"
+						+ "(além de charutos FACE para a vida toda) e, a moça, para comprar joias. \n"
+						+ "Porém, o plano não saiu como esperado. Tive de mandar o jardineiro matar a mulher, \n"
+						+ "pois ela não queria dividir o dinheiro. Esse detetive, junto com seu assistente atrapalharam meus planos.'\n"
+						+ "\n"
+						+ nome
+						+ " pega o tablet, junto com o bilhete, para desvendar a mensagem, que comportava apenas números: \n"
+						+ "\nResolva o código para desvendar a mensagem do bilhete.\n");
+		System.out
+				.println("1- Meu Deus! Não aguento mais ver números na minha frente!\n"
+						+ "2- Espero que essa pista seja útil!\n");
+		retornointeracao14 = entrada.nextInt();
+		return retornointeracao14;
+	}
+
+	static char quartoDesafio1() {
+		char quartaQuestao = '0';
+
+		System.out.println("Tabela Verdade AND (E) e OR (OU): \n\n"
+				+ "P        Q       P -> Q  P v Q \n\n"
+				+ "V     	V   	V   	V \n\n" + "V    	F   	F   	V \n\n"
+				+ "F    	V   	V 	    V \n\n" + "F    	F 	    V   	F \n\n"
+				+ "\n" + "A tabela está correta?\n");
+		System.out
+				.println("OBS: Esta questão terá somente uma chance, caso erre perderá o jogo");
+
+		for (int i = 0; i < 1; i++) {
+			System.out.println("a) SIM");
+			System.out.println("b) NÃO");
+			quartaQuestao = entrada.next().toLowerCase().charAt(0);
+			if (quartaQuestao == 'a') {
+				System.out
+						.println("\nResposta correta!\nMeus Parabéns, você acertou o código!\n\n"
+								+ "Feedback: Tabela verdade é um dispositivo utilizado no estudo da lógica matemática. Com o uso desta tabela é possível definir o valor lógico de uma proposição, isto é, \n"
+								+ "saber quando uma sentença é verdadeira ou falsa.\n"
+								+ "Em lógica, as proposições representam pensamentos completos e indicam afirmações de fatos ou ideias.\n"
+								+ "Utiliza-se a tabela verdade em proposições compostas, ou seja, sentenças formadas por proposições simples, sendo que o resultado do valor lógico\n"
+								+ "depende apenas do valor de cada proposição.\n"
+								+ "Para combinar proposições simples e formar proposições compostas são utilizados conectivos lógicos. Estes conectivos representam operações lógicas.\n"
+								+ "Segue a demonstração de alguns conectivos lógicos, utilizados tanto na lógica argumentativa quanto na programação:não = ~; e = ^; ou = v;");
+			} else {
+				quartaQuestao = 'i';
+				System.out
+						.println("\nIih, você usou todas as tentativas! Mas segue algumas dicas para quando se deparar novamente com esse tipo de problema.\n\n"
+								+ "Feedback: Tabela verdade é um dispositivo utilizado no estudo da lógica matemática. Com o uso desta tabela é possível definir o valor lógico de uma proposição,\n"
+								+ "isto é, saber quando uma sentença é verdadeira ou falsa.\n"
+								+ "Em lógica, as proposições representam pensamentos completos e indicam afirmações de fatos ou ideias.\n"
+								+ "Utiliza-se a tabela verdade em proposições compostas, ou seja, sentenças formadas por proposições simples, sendo que o resultado do valor lógico\n"
+								+ "depende apenas do valor de cada proposição.\n"
+								+ "Para combinar proposições simples e formar proposições compostas são utilizados conectivos lógicos. Estes conectivos representam operações lógicas.\n"
+								+ "Segue a demonstração de alguns conectivos lógicos, utilizados tanto na lógica argumentativa quanto na programação:não = ~; e = ^; ou = v;\n");
+			}
+		}
+		return quartaQuestao;
+	}
+
+	static int interacao15(String nome) {
+		int retornointeracao15;
+		System.out
+				.println("\nParabéns! Você resolveu o problema e desvendou o que tinha no bilhete. \n"
+						+ "Ao digitar o código no tablet, a seguinte mensagem dizia: \n\n"
+						+ "'Espero que possamos manter contato após saber do seu segundo trabalho. Ass.: Bruce Wester'\n\n"
+						+ "A pequena cidade fica famosa pelo crime da joia de openheimer. Mas agora sem taxista.\n"
+						+ "Para cá vêm muitos forasteiros: jornalistas e outros curiosos pela história da jóia.\n");
+		System.out
+				.println("1- Karl Rahnner volta pra casa junto com seu assistente!\n"
+						+ "2- "
+						+ nome
+						+ " decide ficar pra continuar a investigação\n");
+		retornointeracao15 = entrada.nextInt();
+		return retornointeracao15;
+	}
+
+	static int interacao16(String nome) {
+		int retornointeracao16;
+		System.out
+				.println("\n"
+						+ ".-. .-. .-. .-. . . .   .-.   .-. .-. \r\n"
+						+ "|   |-| |-'  |  | | |   | |    |   |  \r\n"
+						+ "`-' ` ' '    '  `-' `-' `-'   `-' `-' \r\n"
+						+ "\nApós o grande crime na cidade os jornalista lotam a cidade com câmeras e multidões para entrevistar o prefeito, Bruce Wester. \n"
+						+ "Este, indefeso com o ataque dos jornalistas ele prefere não comentar sobre o assunto.\n"
+						+ "\n"
+						+ nome
+						+ " conversa com Karl Rahnner sobre o código que havia no bilhete e a mensagem decifrada. \n"
+						+ "Para o detetive, era muito estranho o fato de que o assistente do prefeito ia religiosamente duas vezes ao mês na pararia, \n"
+						+ "mas de lá nunca trazia algo. \nAo contrário, sempre levara consigo algo - que não retornava. \n"
+						+ "O assistente, Joe Clin, sempre muito suspeito, por seu jeito frívolo, sempre de terno e óculos escuros. \n"
+						+ "Era alto, careca e tinha um físico interessante. Na conversa, surge-se-lhe uma luz à Karl Rahnner: 'precisamos investigar a padaria!'.\n"
+						+ "\n"
+						+ nome
+						+ " Karl Rahner desce a escada rumo à padaria. "
+						+ nome
+						+ " o segue. Ao entrarem na padaria, percebem um agradabilíssimo cheiro de doces. \n"
+						+ "Havia, também um garçom, que anotava os pedidos, apesar de a padaria ser pequena. Nada de suspeito no estabelecimento.\n\n");
+		System.out
+				.println("1- Karl Rahnner volta pra casa junto com seu assistente "
+						+ nome
+						+ "\n2- "
+						+ nome
+						+ " decide ficar pra continuar a investigação\n");
+		retornointeracao16 = entrada.nextInt();
+		return retornointeracao16;
+	}
+
+	static void introQuintoDesafio(String nome) {
+		System.out
+				.println("\nKarl Rahnner comenta: 'Este é o tipo de lugar que ninguém desconfiaria de que existiriam ratos em esgoto.'\n\n"
+						+ "Durante uma semana inteira, Karl Rahnner e o assistente foram três vezes à padaria. Nesse intervalo de tempo, ficaram dentro do carro observando.\n\n"
+						+ "No começo da segunda semana, em plena segunda-feira, veem um carro de luxo entrando na rua, e quem sai do carro é Joe Clin. Joe entra na padaria. \n"
+						+ "Também entram Karl Rahnner e "
+						+ nome
+						+ ". Eles observam Clin entrando, diretamente, nos fundos da padaria, sem falar com ninguém. \n"
+						+ "O dono da padaria o acompanha.\n\nO garçom fica na padaria, sozinho.\n\n"
+						+ "Karl Rahnner: 'Elementar, meu caro "
+						+ nome
+						+ "', há algo mais suspeito do que o normal aqui. Não podemos perder essa oportunidade, \n"
+						+ "senão teremos de esperar mais uma ou duas semanas até que volte novamente. Preciso que você chame a atenção para si, para que eu possa investigar os fundos da padaria. \n"
+						+ nome
+						+ " percebe que há sprinklers no teto, que ativam em caso de incêncio. Logo, pega seu tablet com o objetivo de hackear o sistema de segurança da padaria e ativar os tais sprinklers.\n");
+	}
+
+	static char quintoDesafio1() {
+		char quintaQuestao;
+		int contador = 0;
+
+		boolean acertou = false;
+
+		List alternativas = new ArrayList();
+
+		alternativas.add("154");
+		alternativas.add("256");
+		alternativas.add("172");
+		alternativas.add("146");
+		alternativas.add("169");
+
+		do {
+			Collections.shuffle(alternativas);
+
+			System.out
+					.println("Dado o número 1 0 0 1 0 0 1 0, de base binária, qual o seu correspondente decimal? ");
+
+			System.out.println("a) " + alternativas.get(0));
+			System.out.println("b) " + alternativas.get(1));
+			System.out.println("c) " + alternativas.get(2));
+			System.out.println("d) " + alternativas.get(3));
+			System.out.println("e) " + alternativas.get(4));
+			System.out.print("Escolha uma alternativa: ");
+
+			quintaQuestao = entrada.next().toLowerCase().charAt(0);
+
+			switch (quintaQuestao) {
+
+			case 'a':
+				if (alternativas.get(0).equals("146")) {
+					System.out
+							.println("\nResposta correta!\nVocê acertou o código!\n\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base binária, para ver se é decimal.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Leia com atenção: O sistema binário representa os valores com apenas dois algarismo: 0 (zero) ou 1 (um) – ou seja, \n"
+									+ "esse método possui base dois. Essa forma de cálculo, sendo auxiliada pela lógica booleana, é mais simples para a execução das máquinas.\n"
+									+ "O modo mais fácil para você transcrever um número inteiro do sistema decimal para o binário é dividi-lo por dois, anotar o restante (0 ou 1), \n"
+									+ "pegar o quociente e dividi-lo novamente por dois. Faça esse mesmo processo até que o quociente final seja 1 \n"
+									+ "(obrigatoriamente, a última conta deverá ser 2 ÷ 2). Para montar o numeral binário considere o algarismo 1 (essa é uma regra do cálculo) e,\n"
+									+ "depois siga a ordem de zeros e uns de baixo para cima.\n");
+					acertou = true;
+					contador = contador + 1;
+				} else {
+					System.out
+							.println("\nResposta incorreta! Você ainda pode acertar. Segue algumas dicas:\n\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base binária, para ver se é decimal.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Leia com atenção: O sistema binário representa os valores com apenas dois algarismo: 0 (zero) ou 1 (um) – ou seja, \n"
+									+ "esse método possui base dois. Essa forma de cálculo, sendo auxiliada pela lógica booleana, é mais simples para a execução das máquinas.\n"
+									+ "O modo mais fácil para você transcrever um número inteiro do sistema decimal para o binário é dividi-lo por dois, anotar o restante (0 ou 1), \n"
+									+ "pegar o quociente e dividi-lo novamente por dois. Faça esse mesmo processo até que o quociente final seja 1 \n"
+									+ "(obrigatoriamente, a última conta deverá ser 2 ÷ 2). Para montar o numeral binário considere o algarismo 1 (essa é uma regra do cálculo) e,\n"
+									+ "depois siga a ordem de zeros e uns de baixo para cima.\n");
+					contador = contador + 1;
+				}
+				break;
+
+			case 'b':
+				if (alternativas.get(1).equals("146")) {
+					System.out
+							.println("\nResposta correta!\nVocê acertou o código!\n\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base binária, para ver se é decimal.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Leia com atenção: O sistema binário representa os valores com apenas dois algarismo: 0 (zero) ou 1 (um) – ou seja, \n"
+									+ "esse método possui base dois. Essa forma de cálculo, sendo auxiliada pela lógica booleana, é mais simples para a execução das máquinas.\n"
+									+ "O modo mais fácil para você transcrever um número inteiro do sistema decimal para o binário é dividi-lo por dois, anotar o restante (0 ou 1), \n"
+									+ "pegar o quociente e dividi-lo novamente por dois. Faça esse mesmo processo até que o quociente final seja 1 \n"
+									+ "(obrigatoriamente, a última conta deverá ser 2 ÷ 2). Para montar o numeral binário considere o algarismo 1 (essa é uma regra do cálculo) e,\n"
+									+ "depois siga a ordem de zeros e uns de baixo para cima.\n");
+					acertou = true;
+					contador = contador + 1;
+				} else {
+					System.out
+							.println("\nResposta incorreta! Você ainda pode acertar. Segue algumas dicas:\n\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base binária, para ver se é decimal.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Leia com atenção: O sistema binário representa os valores com apenas dois algarismo: 0 (zero) ou 1 (um) – ou seja, \n"
+									+ "esse método possui base dois. Essa forma de cálculo, sendo auxiliada pela lógica booleana, é mais simples para a execução das máquinas.\n"
+									+ "O modo mais fácil para você transcrever um número inteiro do sistema decimal para o binário é dividi-lo por dois, anotar o restante (0 ou 1), \n"
+									+ "pegar o quociente e dividi-lo novamente por dois. Faça esse mesmo processo até que o quociente final seja 1 \n"
+									+ "(obrigatoriamente, a última conta deverá ser 2 ÷ 2). Para montar o numeral binário considere o algarismo 1 (essa é uma regra do cálculo) e,\n"
+									+ "depois siga a ordem de zeros e uns de baixo para cima.\n");
+					contador = contador + 1;
+				}
+				break;
+
+			case 'c':
+				if (alternativas.get(2).equals("146")) {
+					System.out
+							.println("\nResposta correta!\nVocê acertou o código!\n\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base binária, para ver se é decimal.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Leia com atenção: O sistema binário representa os valores com apenas dois algarismo: 0 (zero) ou 1 (um) – ou seja, \n"
+									+ "esse método possui base dois. Essa forma de cálculo, sendo auxiliada pela lógica booleana, é mais simples para a execução das máquinas.\n"
+									+ "O modo mais fácil para você transcrever um número inteiro do sistema decimal para o binário é dividi-lo por dois, anotar o restante (0 ou 1), \n"
+									+ "pegar o quociente e dividi-lo novamente por dois. Faça esse mesmo processo até que o quociente final seja 1 \n"
+									+ "(obrigatoriamente, a última conta deverá ser 2 ÷ 2). Para montar o numeral binário considere o algarismo 1 (essa é uma regra do cálculo) e,\n"
+									+ "depois siga a ordem de zeros e uns de baixo para cima.\n");
+					acertou = true;
+					contador = contador + 1;
+				} else {
+					System.out
+							.println("\nResposta incorreta! Você ainda pode acertar. Segue algumas dicas:\n\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base binária, para ver se é decimal.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Leia com atenção: O sistema binário representa os valores com apenas dois algarismo: 0 (zero) ou 1 (um) – ou seja, \n"
+									+ "esse método possui base dois. Essa forma de cálculo, sendo auxiliada pela lógica booleana, é mais simples para a execução das máquinas.\n"
+									+ "O modo mais fácil para você transcrever um número inteiro do sistema decimal para o binário é dividi-lo por dois, anotar o restante (0 ou 1), \n"
+									+ "pegar o quociente e dividi-lo novamente por dois. Faça esse mesmo processo até que o quociente final seja 1 \n"
+									+ "(obrigatoriamente, a última conta deverá ser 2 ÷ 2). Para montar o numeral binário considere o algarismo 1 (essa é uma regra do cálculo) e,\n"
+									+ "depois siga a ordem de zeros e uns de baixo para cima.\n");
+					contador = contador + 1;
+				}
+				break;
+
+			case 'd':
+				if (alternativas.get(3).equals("146")) {
+					System.out
+							.println("\nResposta correta!\nVocê acertou o código!\n\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base binária, para ver se é decimal.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Leia com atenção: O sistema binário representa os valores com apenas dois algarismo: 0 (zero) ou 1 (um) – ou seja, \n"
+									+ "esse método possui base dois. Essa forma de cálculo, sendo auxiliada pela lógica booleana, é mais simples para a execução das máquinas.\n"
+									+ "O modo mais fácil para você transcrever um número inteiro do sistema decimal para o binário é dividi-lo por dois, anotar o restante (0 ou 1), \n"
+									+ "pegar o quociente e dividi-lo novamente por dois. Faça esse mesmo processo até que o quociente final seja 1 \n"
+									+ "(obrigatoriamente, a última conta deverá ser 2 ÷ 2). Para montar o numeral binário considere o algarismo 1 (essa é uma regra do cálculo) e,\n"
+									+ "depois siga a ordem de zeros e uns de baixo para cima.\n");
+					acertou = true;
+					contador = contador + 1;
+				} else {
+					System.out
+							.println("\nResposta incorreta! Você ainda pode acertar. Segue algumas dicas:\n\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base binária, para ver se é decimal.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Leia com atenção: O sistema binário representa os valores com apenas dois algarismo: 0 (zero) ou 1 (um) – ou seja, \n"
+									+ "esse método possui base dois. Essa forma de cálculo, sendo auxiliada pela lógica booleana, é mais simples para a execução das máquinas.\n"
+									+ "O modo mais fácil para você transcrever um número inteiro do sistema decimal para o binário é dividi-lo por dois, anotar o restante (0 ou 1), \n"
+									+ "pegar o quociente e dividi-lo novamente por dois. Faça esse mesmo processo até que o quociente final seja 1 \n"
+									+ "(obrigatoriamente, a última conta deverá ser 2 ÷ 2). Para montar o numeral binário considere o algarismo 1 (essa é uma regra do cálculo) e,\n"
+									+ "depois siga a ordem de zeros e uns de baixo para cima.\n");
+					contador = contador + 1;
+				}
+				break;
+
+			case 'e':
+				if (alternativas.get(4).equals("146")) {
+					System.out
+							.println("\nResposta correta!\nVocê acertou o código!\n\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base binária, para ver se é decimal.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Leia com atenção: O sistema binário representa os valores com apenas dois algarismo: 0 (zero) ou 1 (um) – ou seja, \n"
+									+ "esse método possui base dois. Essa forma de cálculo, sendo auxiliada pela lógica booleana, é mais simples para a execução das máquinas.\n"
+									+ "O modo mais fácil para você transcrever um número inteiro do sistema decimal para o binário é dividi-lo por dois, anotar o restante (0 ou 1), \n"
+									+ "pegar o quociente e dividi-lo novamente por dois. Faça esse mesmo processo até que o quociente final seja 1 \n"
+									+ "(obrigatoriamente, a última conta deverá ser 2 ÷ 2). Para montar o numeral binário considere o algarismo 1 (essa é uma regra do cálculo) e,\n"
+									+ "depois siga a ordem de zeros e uns de baixo para cima.\n");
+					acertou = true;
+					contador = contador + 1;
+				} else {
+					System.out
+							.println("\nResposta incorreta! Você ainda pode acertar. Segue algumas dicas:\n\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base binária, para ver se é decimal.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Leia com atenção: O sistema binário representa os valores com apenas dois algarismo: 0 (zero) ou 1 (um) – ou seja, \n"
+									+ "esse método possui base dois. Essa forma de cálculo, sendo auxiliada pela lógica booleana, é mais simples para a execução das máquinas.\n"
+									+ "O modo mais fácil para você transcrever um número inteiro do sistema decimal para o binário é dividi-lo por dois, anotar o restante (0 ou 1), \n"
+									+ "pegar o quociente e dividi-lo novamente por dois. Faça esse mesmo processo até que o quociente final seja 1 \n"
+									+ "(obrigatoriamente, a última conta deverá ser 2 ÷ 2). Para montar o numeral binário considere o algarismo 1 (essa é uma regra do cálculo) e,\n"
+									+ "depois siga a ordem de zeros e uns de baixo para cima.\n");
+					contador = contador + 1;
+				}
+				break;
+
+			default:
+				System.out.println("Escolha inválida!\n");
+				contador = contador + 1;
+				break;
+			}
+		} while (!acertou && contador < 3);
+
+		if (acertou) {
+			System.out.println("Acertou na tentativa: " + contador);
+		} else {
+			quintaQuestao = 'i';
+			System.out.println("Iih você usou todas as tentativas\n");
+		}
+
+		return quintaQuestao;
+	}
+
+	static int interacao17(String nome) {
+		int retornointeracao17;
+		System.out
+				.println("\nParabéns! Você conseguiu hackear o sistema de segurança da padaria.\n\n"
+						+ "Num piscar de olhos, Karl Rahnner já estava saindo da padaria.\n\n"
+						+ "Rahnner vê grandes pilhas de dinheiro, e máquinas de contagem de notas; três homens armados, contando dinheiro com a mão, o dono ensacando dinheiro e Joe liderando a operação.\n"
+						+ "\n"
+						+ "'Nossa, isso é grave', pensa "
+						+ nome
+						+ "\n\n"
+						+ "Karl Rahnner e seu assistente percebem que precisam investigar mais sobre o passado de Joe. O único meio de o fazer, é indo à própria Prefeitura da Cidade.\n"
+						+ "\nKarl Rahnner tinha influência para entrar na prefeitura, pois uma das arquivadoras do prédio teria sido um de suas noites.\n"
+						+ "\nVão até o prédio. Encontram alguns conhecidos. Geralmente pessoas que não vão muito com a cara de Rahnner.\n\n"
+						+ "1- 'Cuidado, pois podem te julgar por estar comigo!'\n"
+						+ "2- 'Estes caras estão doidos pra me ferrar!'\n");
+		retornointeracao17 = entrada.nextInt();
+		return retornointeracao17;
+	}
+
+	static void introSextoDesafio(String nome) {
+
+		System.out
+				.println("\nProcuram pela arquivadora. Logo a encontram, altiva e alegre, por detrás do balcão.\n\n"
+						+ "Com um tom romântico, Karl Rahnner dela se aproxima e diz que precisavam ter um outro encontro, pois que ela lhe devia um favor.\n\n"
+						+ "Ela olha com um olhar malicioso, porém carinhoso, e pergunta: 'O que quer?'.\n"
+						+ "\n"
+						+ "'Preciso dos arquivos de Joe Clin', responde.\n\n"
+						+ "Com um olhar assustado e engolindo a saliva de forma seca, ela responde: 'pois bem, hum', e vai atrás dos arquivos de Joe.\n\n"
+						+ "Ela retorna, após cerca de 10 minutos, sem nada em suas mãos. Diz que qualquer arquivo sobre Joe Clin inexiste nos autos do prédio. \n"
+						+ "Porém, no sistema do computador da prefeitura há um arquivo com senha e fortemente protegido, sobre Joe Clin, e que nem ela mesma tinha autorização nem senha para acessar. \n"
+						+ "'Este arquivo pode ser acessado na biblioteca da cidade. Foi um prazer reencontrá-lo, Karl Rahnner', diz a senhorita, de modo saliente.\n"
+						+ "\n"
+						+ "Karl Rahnner e "
+						+ nome
+						+ " vão à biblioteca da cidade. Logo aquela que ficava longe do prédio da prefeitura.\n\n"
+						+ "Chegando no local, vêm que está vazio. 'Curioso', diz Rahnner, 'as pessoas não lêem muito hoje em dia'.\n\n"
+						+ "Vão direto aos computadores da biblioteca. "
+						+ nome
+						+ " começa a desbloquear os arquivos de Joe Clin em um CD-ROM.\n");
+	}
+
+	static char sextoDesafio1() {
+		char sextaQuestao;
+		int contador = 0;
+
+		boolean acertou = false;
+
+		List alternativas = new ArrayList();
+
+		alternativas.add("665");
+		alternativas.add("4EC");
+		alternativas.add("53E");
+		alternativas.add("4FF");
+		alternativas.add("4BF");
+
+		do {
+			Collections.shuffle(alternativas);
+
+			System.out
+					.println("Dado o número 2 4 7 6, de base octal, qual o seu correspondente hexadecimal? ");
+
+			System.out.println("a) " + alternativas.get(0));
+			System.out.println("b) " + alternativas.get(1));
+			System.out.println("c) " + alternativas.get(2));
+			System.out.println("d) " + alternativas.get(3));
+			System.out.println("e) " + alternativas.get(4));
+			System.out.print("Escolha uma alternativa: ");
+
+			sextaQuestao = entrada.next().toLowerCase().charAt(0);
+
+			switch (sextaQuestao) {
+
+			case 'a':
+				if (alternativas.get(0).equals("53E")) {
+					System.out
+							.println("\nResposta correta!\nVocê acertou o código!\n\n"
+									+ "Feedback: Para o cálculo de número de base octal, para hexadecimal, basta utilizar as dicas anteriores para passar o número para decimal\n"
+									+ "ou para binário, e depois passar para hexadecimal. Ainda, se você souber montar a tabela de números binários, fica mais fácil. Parabéns!\n");
+					acertou = true;
+					contador = contador + 1;
+				} else {
+					System.out
+							.println("\nResposta incorreta!\n\n"
+									+ "Feedback: Para o cálculo de número de base octal, para hexadecimal, basta utilizar as dicas anteriores para passar o número para decimal\n"
+									+ "ou para binário, e depois passar para hexadecimal. Ainda, se você souber montar a tabela de números binários, fica mais fácil.Boa sorte!\n");
+					contador = contador + 1;
+				}
+				break;
+
+			case 'b':
+				if (alternativas.get(1).equals("53E")) {
+					System.out
+							.println("\nResposta correta!\nVocê acertou o código!\n\n"
+									+ "Feedback: Para o cálculo de número de base octal, para hexadecimal, basta utilizar as dicas anteriores para passar o número para decimal\n"
+									+ "ou para binário, e depois passar para hexadecimal. Ainda, se você souber montar a tabela de números binários, fica mais fácil. Parabéns!\n");
+					acertou = true;
+					contador = contador + 1;
+				} else {
+					System.out
+							.println("\nResposta incorreta!\n\n "
+									+ "Feedback: Para o cálculo de número de base octal, para hexadecimal, basta utilizar as dicas anteriores para passar o número para decimal\n"
+									+ "ou para binário, e depois passar para hexadecimal. Ainda, se você souber montar a tabela de números binários, fica mais fácil.Boa sorte!\n");
+					contador = contador + 1;
+				}
+				break;
+
+			case 'c':
+				if (alternativas.get(2).equals("53E")) {
+					System.out
+							.println("\nResposta correta!\nVocê acertou o código!\n\n"
+									+ "Feedback: Para o cálculo de número de base octal, para hexadecimal, basta utilizar as dicas anteriores para passar o número para decimal\n"
+									+ "ou para binário, e depois passar para hexadecimal. Ainda, se você souber montar a tabela de números binários, fica mais fácil. Parabéns!\n");
+					acertou = true;
+					contador = contador + 1;
+				} else {
+					System.out
+							.println("\nResposta incorreta!\n\n"
+									+ "Feedback: Para o cálculo de número de base octal, para hexadecimal, basta utilizar as dicas anteriores para passar o número para decimal\n"
+									+ "ou para binário, e depois passar para hexadecimal. Ainda, se você souber montar a tabela de números binários, fica mais fácil.Boa sorte!\n");
+					contador = contador + 1;
+				}
+				break;
+
+			case 'd':
+				if (alternativas.get(3).equals("53E")) {
+					System.out
+							.println("\nResposta correta!\nVocê acertou o código!\n\n"
+									+ "Feedback: Para o cálculo de número de base octal, para hexadecimal, basta utilizar as dicas anteriores para passar o número para decimal\n"
+									+ "ou para binário, e depois passar para hexadecimal. Ainda, se você souber montar a tabela de números binários, fica mais fácil. Parabéns!\n");
+					acertou = true;
+					contador = contador + 1;
+				} else {
+					System.out
+							.println("\nResposta incorreta!\n\n"
+									+ "Feedback: Para o cálculo de número de base octal, para hexadecimal, basta utilizar as dicas anteriores para passar o número para decimal\n"
+									+ "ou para binário, e depois passar para hexadecimal. Ainda, se você souber montar a tabela de números binários, fica mais fácil.Boa sorte!\n");
+					contador = contador + 1;
+				}
+				break;
+
+			case 'e':
+				if (alternativas.get(4).equals("53E")) {
+					System.out
+							.println("\nResposta correta!\nVocê acertou o código!\n\n"
+									+ "Feedback: Para o cálculo de número de base octal, para hexadecimal, basta utilizar as dicas anteriores para passar o número para decimal\n"
+									+ "ou para binário, e depois passar para hexadecimal. Ainda, se você souber montar a tabela de números binários, fica mais fácil. Parabéns!\n");
+					acertou = true;
+					contador = contador + 1;
+				} else {
+					System.out
+							.println("\nResposta incorreta!\n\n"
+									+ "Feedback: Para o cálculo de número de base octal, para hexadecimal, basta utilizar as dicas anteriores para passar o número para decimal\n"
+									+ "ou para binário, e depois passar para hexadecimal. Ainda, se você souber montar a tabela de números binários, fica mais fácil.Boa sorte!\n");
+					contador = contador + 1;
+				}
+				break;
+
+			default:
+				System.out.println("Escolha inválida!\n");
+				contador = contador + 1;
+				break;
+			}
+		} while (!acertou && contador < 3);
+
+		if (acertou) {
+			System.out.println("Acertou na tentativa: " + contador);
+		} else {
+			sextaQuestao = 'i';
+			System.out.println("Iih você usou todas as tentativas");
+		}
+
+		return sextaQuestao;
+	}
+
+	static void introSetimoDesafio(String nome) {
+		System.out
+				.println("\nParabéns! Você conseguiu desbloquear o arquivo de Joe Clin.\n\n"
+						+ "Nos arquivos continha o passado de Joe Clin, em que seus pais foram mortos por um assassino; e Joe e seu irmão Patrick foram mandados a um orfanato. \n"
+						+ "Patrick foi adotado por uma família de médio-porte e Joe não conseguiu nenhuma família e acabou fugindo do orfanato. Sua adolescência foi sobreviver nas ruas de uma cidade caótica, \n"
+						+ "até que o prefeito o encontrou e viu nele grande potencial. O prefeito decidiu, inicialmente, contratá-lo, percebendo que Joe já era maior de idade, para ser seu assistente, como que seu braço-direito.\n"
+						+ "\n"
+						+ "Karl Rahnner e "
+						+ nome
+						+ " percebem que Patrick, o taxista, era irmão de Joe. "
+						+ nome
+						+ " encontrou jornais que nunca conseguiram ser publicados, com fotos de cenas de crimas, em que ele, o próprio Joe, \n"
+						+ "aparecia nas fotos, onde, na maioria desses acidentes, o assassino não havia sido encontrado. \n"
+						+ "\n"
+						+ nome
+						+ " baixa os arquivos e vai, junto de Karl Rahnner, para casa, e começam a interligar os fatos.\n"
+						+ "\n"
+						+ nome
+						+ " cria um código para analisar e ligar os pontos de todas as pistas para um principal suspeito.\n");
+	}
+
+	static char setimoDesafio1() {
+		char setimaQuestao;
+		int contador = 0;
+
+		boolean acertou = false;
+
+		List alternativas = new ArrayList();
+
+		alternativas.add("1457");
+		alternativas.add("1246");
+		alternativas.add("1312");
+		alternativas.add("1541");
+		alternativas.add("1313");
+
+		do {
+			Collections.shuffle(alternativas);
+
+			System.out
+					.println("Dado o número 1 0 1 1 0 0 1 0 1 1, de base binária, qual o seu correspondente octal? ");
+
+			System.out.println("a) " + alternativas.get(0));
+			System.out.println("b) " + alternativas.get(1));
+			System.out.println("c) " + alternativas.get(2));
+			System.out.println("d) " + alternativas.get(3));
+			System.out.println("e) " + alternativas.get(4));
+			System.out.print("Escolha uma alternativa: ");
+
+			setimaQuestao = entrada.next().toLowerCase().charAt(0);
+
+			switch (setimaQuestao) {
+
+			case 'a':
+				if (alternativas.get(0).equals("1313")) {
+					System.out
+							.println("\nResposta correta!\nVocê acertou o código!\n"
+									+ "Provavelmente você teve de fazer o cálculo à mão.\n\n"
+									+ "Feedback: A conversão de octal para binário é feita convertendo dígito a dígito de octal em binário, da direita para a esquerda. \n"
+									+ "Cada digito é convertido para um grupo de 3 bits.\n");
+					acertou = true;
+					contador = contador + 1;
+				} else {
+					System.out
+							.println("\nResposta incorreta! Mas você ainda pode acertar! Segue algumas dicas:\n"
+									+ "Provavelmente você teve de fazer o cálculo à mão.\n\n"
+									+ "Feedback: A conversão de octal para binário é feita convertendo dígito a dígito de octal em binário, da direita para a esquerda. \n"
+									+ "Cada digito é convertido para um grupo de 3 bits.\n");
+					contador = contador + 1;
+				}
+				break;
+
+			case 'b':
+				if (alternativas.get(1).equals("1313")) {
+					System.out
+							.println("\nResposta correta!\nVocê acertou o código!\n"
+									+ "Provavelmente você teve de fazer o cálculo à mão.\n\n"
+									+ "Feedback: A conversão de octal para binário é feita convertendo dígito a dígito de octal em binário, da direita para a esquerda. \n"
+									+ "Cada digito é convertido para um grupo de 3 bits.\n");
+					acertou = true;
+					contador = contador + 1;
+				} else {
+					System.out
+							.println("\nResposta incorreta! Mas você ainda pode acertar! Segue algumas dicas:\n"
+									+ "Provavelmente você teve de fazer o cálculo à mão.\n\n"
+									+ "Feedback: A conversão de octal para binário é feita convertendo dígito a dígito de octal em binário, da direita para a esquerda. \n"
+									+ "Cada digito é convertido para um grupo de 3 bits.\n");
+					contador = contador + 1;
+				}
+				break;
+
+			case 'c':
+				if (alternativas.get(2).equals("1313")) {
+					System.out
+							.println("\nResposta correta!\nVocê acertou o código!\n"
+									+ "Provavelmente você teve de fazer o cálculo à mão.\n\n"
+									+ "Feedback: A conversão de octal para binário é feita convertendo dígito a dígito de octal em binário, da direita para a esquerda. \n"
+									+ "Cada digito é convertido para um grupo de 3 bits.\n");
+					acertou = true;
+					contador = contador + 1;
+				} else {
+					System.out
+							.println("\nResposta incorreta! Mas você ainda pode acertar! Segue algumas dicas:\n"
+									+ "Provavelmente você teve de fazer o cálculo à mão.\n\n"
+									+ "Feedback: A conversão de octal para binário é feita convertendo dígito a dígito de octal em binário, da direita para a esquerda. \n"
+									+ "Cada digito é convertido para um grupo de 3 bits.\n");
+					contador = contador + 1;
+				}
+				break;
+
+			case 'd':
+				if (alternativas.get(3).equals("1313")) {
+					System.out
+							.println("\nResposta correta!\nVocê acertou o código!\n"
+									+ "Provavelmente você teve de fazer o cálculo à mão.\n\n"
+									+ "Feedback: A conversão de octal para binário é feita convertendo dígito a dígito de octal em binário, da direita para a esquerda. \n"
+									+ "Cada digito é convertido para um grupo de 3 bits.\n");
+					acertou = true;
+					contador = contador + 1;
+				} else {
+					System.out
+							.println("\nResposta incorreta! Mas você ainda pode acertar! Segue algumas dicas:\n"
+									+ "Provavelmente você teve de fazer o cálculo à mão.\n\n"
+									+ "Feedback: A conversão de octal para binário é feita convertendo dígito a dígito de octal em binário, da direita para a esquerda. \n"
+									+ "Cada digito é convertido para um grupo de 3 bits.\n");
+					contador = contador + 1;
+				}
+				break;
+
+			case 'e':
+				if (alternativas.get(4).equals("1313")) {
+					System.out
+							.println("\nResposta correta!\nVocê acertou o código!\n"
+									+ "Provavelmente você teve de fazer o cálculo à mão.\n\n"
+									+ "Feedback: A conversão de octal para binário é feita convertendo dígito a dígito de octal em binário, da direita para a esquerda. \n"
+									+ "Cada digito é convertido para um grupo de 3 bits.\n");
+					acertou = true;
+					contador = contador + 1;
+				} else {
+					System.out
+							.println("\nResposta incorreta! Mas você ainda pode acertar! Segue algumas dicas:\n"
+									+ "Provavelmente você teve de fazer o cálculo à mão.\n\n"
+									+ "Feedback: A conversão de octal para binário é feita convertendo dígito a dígito de octal em binário, da direita para a esquerda. \n"
+									+ "Cada digito é convertido para um grupo de 3 bits.\n");
+					contador = contador + 1;
+				}
+				break;
+
+			default:
+				System.out.println("Escolha inválida!");
+				contador = contador + 1;
+				break;
+			}
+		} while (!acertou && contador < 3);
+
+		if (acertou) {
+			System.out.println("Acertou na tentativa: " + contador);
+		} else {
+			setimaQuestao = 'i';
+			System.out.println("Iih você usou todas as tentativas");
+		}
+
+		return setimaQuestao;
+	}
+
+	static int interacao18(String nome) {
+		int retornointeracao18;
+		System.out
+				.println("\nTABELA DE PISTAS:\nBILHETE\nPADARIA \nRELACIONAMENTO DE JOE COM PREFEITO\n\n"
+						+ "A padaria serve como lavagem de dinheiro, que Joe comanda, como se fosse os olhos do prefeito. Joe poderia ser o principal \n"
+						+ "suspeito das mortes dos acidentes, que nunca foram publicados, enquanto o prefeito limpava seus rastros. O principal: \n"
+						+ "Joe deu o contato de seu irmão para o prefeito, assim sabemos que Patrick escondia os cadáveres.\n\n"
+						+ "O prefeito, na verdade, era o mandante de toda a farsa. Os irmãos órfãos, Patrick e Joe Clin, eram apenas os executores.\n\n"
+						+ "Karl Rahnner vai à polícia, leva o programa feito por "
+						+ nome
+						+ ", entregam o prefeito com todos seus comparsas.\n\n"
+						+ "Agora nossa história se desenrola; a padaria fecha, o prefeito vai preso para depor e Joe some no meio do nada.\n");
+		System.out.println("1- 'Agora é a hora da verdade'!\n"
+				+ "2- 'Não podemos errar mais'!\n");
+		retornointeracao18 = entrada.nextInt();
+		return retornointeracao18;
+	}
+
+	static int interacao19(String nome) {
+		int retornointeracao19;
+		System.out
+				.println("\n.-. .-. .-. .-. . . .   .-.   .-. .-. .-. \r\n"
+						+ "|   |-| |-'  |  | | |   | |    |   |   |  \r\n"
+						+ "`-' ` ' '    '  `-' `-' `-'   `-' `-' `-' \n\n"
+						+ "A cidade caótica após toda a revelação de um fato atrás do outro e, como uma esponja, que suga todo o mal, jornalistas ficam enlouquecidos, \n"
+						+ "e o turismo decai na cidade. O povo começa a ter medo da própria cidade e as pessoas têm medo de chegar perto. A cidade, sem prefeito, sem taxista e sem padaria, \n"
+						+ "apenas com policiais dedicados, com a autoridade do delegado Otho, que vem fazendo um trabalho surpreendentemente perfeito.\n"
+						+ "Apenas os créditos vão para Karl Rahnner e seu ajudante, "
+						+ nome
+						+ ", que decifra os códigos cibernéticos. Porém, temos o último trunfo. \n"
+						+ "Onde está Joe? Se os crimes não acabaram, quem realmente é o líder de todos esses ratos em cada bueiro da cidade.\n\n"
+						+ "Karl Rahnner decide, então, após a revelação do prefeito, Karl Rahnner decide, então, ser o novo prefeito da cidade. \n"
+						+ "Como a cidade não era muito populosa, e com os grandes feitos do astuto detetive, Karl Rahnner, então, declara sua candidatura, para ser o novo prefeito de MiddleTown. \n"
+						+ nome
+						+ " fica como seu ajudante de campanha. Assim, a cidade começa a ver esperanças novamente.\n");
+		System.out
+				.println("1- 'Precisamos trazer  justiça para esse povo novamente'!\n"
+						+ "2- 'Tempos melhores irão por vir'!\n");
+		retornointeracao19 = entrada.nextInt();
+		return retornointeracao19;
+	}
+
+	static void introOitavoDesafio(String nome) {
+		System.out
+				.println("\nNas primeiras semanas, Karl Rahnner era sempre assediado por diversos jornalistas, afim de saberem suas propostas,\n"
+						+ "já que ele havia ganhado um aumento de 62% nas pesquisas.\n\n"
+						+ "Ele propôs quebrar a desigualdade extrema e o controle dos ricos da cidade, sobre os pobres, afim de que pare de morrer gente humilde. \n"
+						+ "Assim, o ajudante NomeJogador começa a ver Karl Rahnner com novos olhos. Ele vê um homem que não era mais o seu amigo e mentor. \n"
+						+ "Karl Rahnner mal liga para sua amizade. Após três semanas de dedicação à campanha do novo candidado a prefeito da cidade, Karl Rahnner assume o posto.\n\n"
+						+ "Porém, logo após ser eleito, Karl Rahnner chega perto de "
+						+ nome
+						+ ", e diz as seguintes palavras: “Obrigado por tudo o que você fez por mim até hoje! \n"
+						+ "Por me ajudar a chegar onde estou agora. Mas, como sei que você é parecido comigo, tenho de lhe demitir e dizer adeus à nossa parceria.'.\n\n"
+						+ nome
+						+ " entra em um bar, desolado e com muita raiva... Bebe uma dose da vodka que Karl Rahnner costumara tomar. Estando no bar sozinho, \n"
+						+ "aparece um homem estranho ao lado e lhe passa, discretamente, um arquivo. Ele apenas diz: ‘esta cidade ficou ainda mais podre!’, e vai embora.\n\n"
+						+ nome
+						+ " abre o arquivo e vê fotos de Karl Rahnner com Joe Clin, e pedaços de fotos de jornais nos quais Karl Rahnner e Joe Clin estão juntos, de óculos e terno.\n\n"
+						+ "1- Procurar o antigo TABLET, que havia ficado como recordação da amizade de Rahnner.\n"
+						+ "2- Decidir hackear o e-mail de Karl Rahnner...\n");
+		String interacaoplus2 = entrada.next();
+	}
+
+	static char oitavoDesafio1() {
+		char oitavaQuestao;
+		int contador = 0;
+
+		boolean acertou = false;
+
+		List alternativas = new ArrayList();
+
+		alternativas.add("11111100011");
+		alternativas.add("11111011100");
+		alternativas.add("111110111000");
+		alternativas.add("111110111");
+		alternativas.add("1111010101");
+
+		do {
+			Collections.shuffle(alternativas);
+
+			System.out
+					.println("\nOs computadores utilizam o sistema binário ou de base 2 que é um sistema de numeração em que todas as quantidades \n"
+							+ "se representam com base em dois números, ou seja, (0 e 1). \n"
+							+ "Em um computador o número 2019, em base decimal, será representado, em base binária, por: ");
+
+			System.out.println("a) " + alternativas.get(0));
+			System.out.println("b) " + alternativas.get(1));
+			System.out.println("c) " + alternativas.get(2));
+			System.out.println("d) " + alternativas.get(3));
+			System.out.println("e) " + alternativas.get(4));
+			System.out.print("Escolha uma alternativa: ");
+
+			oitavaQuestao = entrada.next().toLowerCase().charAt(0);
+
+			switch (oitavaQuestao) {
+
+			case 'a':
+				if (alternativas.get(0).equals("11111100011")) {
+					System.out
+							.println("\nResposta correta!\nVocê acertou o código!\n\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base binária, para ver se é decimal.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Leia com atenção: O sistema binário representa os valores com apenas dois algarismo: 0 (zero) ou 1 (um) – ou seja, \n"
+									+ "esse método possui base dois. Essa forma de cálculo, sendo auxiliada pela lógica booleana, é mais simples para a execução das máquinas.\n"
+									+ "O modo mais fácil para você transcrever um número inteiro do sistema decimal para o binário é dividi-lo por dois, anotar o restante (0 ou 1), \n"
+									+ "pegar o quociente e dividi-lo novamente por dois. Faça esse mesmo processo até que o quociente final seja 1 \n"
+									+ "(obrigatoriamente, a última conta deverá ser 2 ÷ 2). Para montar o numeral binário considere o algarismo 1 (essa é uma regra do cálculo) e,\n"
+									+ "depois siga a ordem de zeros e uns de baixo para cima.\n");
+					acertou = true;
+					contador = contador + 1;
+				} else {
+					System.out
+							.println("\nResposta incorreta! Você ainda pode acertar. Segue algumas dicas:\n\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base binária, para ver se é decimal.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Leia com atenção: O sistema binário representa os valores com apenas dois algarismo: 0 (zero) ou 1 (um) – ou seja, \n"
+									+ "esse método possui base dois. Essa forma de cálculo, sendo auxiliada pela lógica booleana, é mais simples para a execução das máquinas.\n"
+									+ "O modo mais fácil para você transcrever um número inteiro do sistema decimal para o binário é dividi-lo por dois, anotar o restante (0 ou 1), \n"
+									+ "pegar o quociente e dividi-lo novamente por dois. Faça esse mesmo processo até que o quociente final seja 1 \n"
+									+ "(obrigatoriamente, a última conta deverá ser 2 ÷ 2). Para montar o numeral binário considere o algarismo 1 (essa é uma regra do cálculo) e,\n"
+									+ "depois siga a ordem de zeros e uns de baixo para cima.\n");
+					contador = contador + 1;
+				}
+				break;
+
+			case 'b':
+				if (alternativas.get(1).equals("11111100011")) {
+					System.out
+							.println("\nResposta correta!\nVocê acertou o código!\n\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base binária, para ver se é decimal.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Leia com atenção: O sistema binário representa os valores com apenas dois algarismo: 0 (zero) ou 1 (um) – ou seja, \n"
+									+ "esse método possui base dois. Essa forma de cálculo, sendo auxiliada pela lógica booleana, é mais simples para a execução das máquinas.\n"
+									+ "O modo mais fácil para você transcrever um número inteiro do sistema decimal para o binário é dividi-lo por dois, anotar o restante (0 ou 1), \n"
+									+ "pegar o quociente e dividi-lo novamente por dois. Faça esse mesmo processo até que o quociente final seja 1 \n"
+									+ "(obrigatoriamente, a última conta deverá ser 2 ÷ 2). Para montar o numeral binário considere o algarismo 1 (essa é uma regra do cálculo) e,\n"
+									+ "depois siga a ordem de zeros e uns de baixo para cima.\n");
+					acertou = true;
+					contador = contador + 1;
+				} else {
+					System.out
+							.println("\nResposta incorreta! Você ainda pode acertar. Segue algumas dicas:\n\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base binária, para ver se é decimal.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Leia com atenção: O sistema binário representa os valores com apenas dois algarismo: 0 (zero) ou 1 (um) – ou seja, \n"
+									+ "esse método possui base dois. Essa forma de cálculo, sendo auxiliada pela lógica booleana, é mais simples para a execução das máquinas.\n"
+									+ "O modo mais fácil para você transcrever um número inteiro do sistema decimal para o binário é dividi-lo por dois, anotar o restante (0 ou 1), \n"
+									+ "pegar o quociente e dividi-lo novamente por dois. Faça esse mesmo processo até que o quociente final seja 1 \n"
+									+ "(obrigatoriamente, a última conta deverá ser 2 ÷ 2). Para montar o numeral binário considere o algarismo 1 (essa é uma regra do cálculo) e,\n"
+									+ "depois siga a ordem de zeros e uns de baixo para cima.\n");
+					contador = contador + 1;
+				}
+				break;
+
+			case 'c':
+				if (alternativas.get(2).equals("11111100011")) {
+					System.out
+							.println("\nResposta correta!\nVocê acertou o código!\n\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base binária, para ver se é decimal.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Leia com atenção: O sistema binário representa os valores com apenas dois algarismo: 0 (zero) ou 1 (um) – ou seja, \n"
+									+ "esse método possui base dois. Essa forma de cálculo, sendo auxiliada pela lógica booleana, é mais simples para a execução das máquinas.\n"
+									+ "O modo mais fácil para você transcrever um número inteiro do sistema decimal para o binário é dividi-lo por dois, anotar o restante (0 ou 1), \n"
+									+ "pegar o quociente e dividi-lo novamente por dois. Faça esse mesmo processo até que o quociente final seja 1 \n"
+									+ "(obrigatoriamente, a última conta deverá ser 2 ÷ 2). Para montar o numeral binário considere o algarismo 1 (essa é uma regra do cálculo) e,\n"
+									+ "depois siga a ordem de zeros e uns de baixo para cima.\n");
+					acertou = true;
+					contador = contador + 1;
+				} else {
+					System.out
+							.println("\nResposta incorreta! Você ainda pode acertar. Segue algumas dicas:\n\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base binária, para ver se é decimal.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Leia com atenção: O sistema binário representa os valores com apenas dois algarismo: 0 (zero) ou 1 (um) – ou seja, \n"
+									+ "esse método possui base dois. Essa forma de cálculo, sendo auxiliada pela lógica booleana, é mais simples para a execução das máquinas.\n"
+									+ "O modo mais fácil para você transcrever um número inteiro do sistema decimal para o binário é dividi-lo por dois, anotar o restante (0 ou 1), \n"
+									+ "pegar o quociente e dividi-lo novamente por dois. Faça esse mesmo processo até que o quociente final seja 1 \n"
+									+ "(obrigatoriamente, a última conta deverá ser 2 ÷ 2). Para montar o numeral binário considere o algarismo 1 (essa é uma regra do cálculo) e,\n"
+									+ "depois siga a ordem de zeros e uns de baixo para cima.\n");
+					contador = contador + 1;
+				}
+				break;
+
+			case 'd':
+				if (alternativas.get(3).equals("11111100011")) {
+					System.out
+							.println("\nResposta correta!\nVocê acertou o código!\n\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base binária, para ver se é decimal.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Leia com atenção: O sistema binário representa os valores com apenas dois algarismo: 0 (zero) ou 1 (um) – ou seja, \n"
+									+ "esse método possui base dois. Essa forma de cálculo, sendo auxiliada pela lógica booleana, é mais simples para a execução das máquinas.\n"
+									+ "O modo mais fácil para você transcrever um número inteiro do sistema decimal para o binário é dividi-lo por dois, anotar o restante (0 ou 1), \n"
+									+ "pegar o quociente e dividi-lo novamente por dois. Faça esse mesmo processo até que o quociente final seja 1 \n"
+									+ "(obrigatoriamente, a última conta deverá ser 2 ÷ 2). Para montar o numeral binário considere o algarismo 1 (essa é uma regra do cálculo) e,\n"
+									+ "depois siga a ordem de zeros e uns de baixo para cima.\n");
+					acertou = true;
+					contador = contador + 1;
+				} else {
+					System.out
+							.println("\nResposta incorreta! Você ainda pode acertar. Segue algumas dicas:\n\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base binária, para ver se é decimal.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Leia com atenção: O sistema binário representa os valores com apenas dois algarismo: 0 (zero) ou 1 (um) – ou seja, \n"
+									+ "esse método possui base dois. Essa forma de cálculo, sendo auxiliada pela lógica booleana, é mais simples para a execução das máquinas.\n"
+									+ "O modo mais fácil para você transcrever um número inteiro do sistema decimal para o binário é dividi-lo por dois, anotar o restante (0 ou 1), \n"
+									+ "pegar o quociente e dividi-lo novamente por dois. Faça esse mesmo processo até que o quociente final seja 1 \n"
+									+ "(obrigatoriamente, a última conta deverá ser 2 ÷ 2). Para montar o numeral binário considere o algarismo 1 (essa é uma regra do cálculo) e,\n"
+									+ "depois siga a ordem de zeros e uns de baixo para cima.\n");
+					contador = contador + 1;
+				}
+				break;
+
+			case 'e':
+				if (alternativas.get(4).equals("11111100011")) {
+					System.out
+							.println("\nResposta correta!\nVocê acertou o código!\n\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base binária, para ver se é decimal.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Leia com atenção: O sistema binário representa os valores com apenas dois algarismo: 0 (zero) ou 1 (um) – ou seja, \n"
+									+ "esse método possui base dois. Essa forma de cálculo, sendo auxiliada pela lógica booleana, é mais simples para a execução das máquinas.\n"
+									+ "O modo mais fácil para você transcrever um número inteiro do sistema decimal para o binário é dividi-lo por dois, anotar o restante (0 ou 1), \n"
+									+ "pegar o quociente e dividi-lo novamente por dois. Faça esse mesmo processo até que o quociente final seja 1 \n"
+									+ "(obrigatoriamente, a última conta deverá ser 2 ÷ 2). Para montar o numeral binário considere o algarismo 1 (essa é uma regra do cálculo) e,\n"
+									+ "depois siga a ordem de zeros e uns de baixo para cima.\n");
+					acertou = true;
+					contador = contador + 1;
+				} else {
+					System.out
+							.println("\nResposta incorreta! Você ainda pode acertar. Segue algumas dicas:\n\n"
+									+ "Feedback:\nProvavelmente você teve de calcular à mão o número de base binária, para ver se é decimal.\n"
+									+ "Não vale utilizar calculadora binária pronta da internet. O intuito desde jogo é fazer com que você internalize melhor a matéria,\n"
+									+ "de modo interativo.\n"
+									+ "Leia com atenção: O sistema binário representa os valores com apenas dois algarismo: 0 (zero) ou 1 (um) – ou seja, \n"
+									+ "esse método possui base dois. Essa forma de cálculo, sendo auxiliada pela lógica booleana, é mais simples para a execução das máquinas.\n"
+									+ "O modo mais fácil para você transcrever um número inteiro do sistema decimal para o binário é dividi-lo por dois, anotar o restante (0 ou 1), \n"
+									+ "pegar o quociente e dividi-lo novamente por dois. Faça esse mesmo processo até que o quociente final seja 1 \n"
+									+ "(obrigatoriamente, a última conta deverá ser 2 ÷ 2). Para montar o numeral binário considere o algarismo 1 (essa é uma regra do cálculo) e,\n"
+									+ "depois siga a ordem de zeros e uns de baixo para cima.\n");
+					contador = contador + 1;
+				}
+				break;
+
+			default:
+				System.out.println("Escolha inválida!");
+				contador = contador + 1;
+				break;
+			}
+		} while (!acertou && contador < 3);
+
+		if (acertou) {
+			System.out.println("Acertou na tentativa: " + contador);
+		} else {
+			oitavaQuestao = 'i';
+			System.out.println("Iih você usou todas as tentativas");
+		}
+
+		return oitavaQuestao;
+	}
+
+	static void finalizacaoJogo(String nome) {
+		System.out
+				.println("\nPARABÉNS! VOCÊ RESOLVEU O PROBLEMA FINAL DO JOGO! PODE SE CONSIDERAR UM INVESTIGADOR DE ELITE, COM APTIDÃO CIBERNÉTICA, \n"
+						+ "E PODE VER O DESFECHO DESSA HISTÓRIA!\n\n"
+						+ nome
+						+ " abre o e-mail de Karl Rahnner, vê conversas deste com Joe, além de lugares onde se reuniam, contas em outros países e planejamentos para transformação da cidade \n"
+						+ "em uma grande prisão para presidentes e pessoas importantes do mundo...\n\n"
+						+ "No e-mail havia o endereço da próxima reunião com grandes políticos e, nela, iriam debater sobre a bomba que existe na cidade.\n\n"
+						+ nome
+						+ ", então, se enfurece, pega sua pistola e vai atrás de Karl Rahnner.\n\n"
+						+ "Entra facilmente no gabinete do prefeito, por ser, deste, amigo. NomeJogador vê o prefeito no corredor. Karl Rahnner o vê e diz:\n"
+						+ "“Oh meu grande e saudoso amigo, o que estás a fazer aqui?”\n “Vim aqui mata-lo!”. E atira perto do seu coração.\n\n"
+						+ "Os seguranças contém"
+						+ nome
+						+ " e o prendem. Na prisão, NomeJogador, aflito, diz ao guarda, perto de sua cela: \n"
+						+ "‘pelo menos eu fiz algo de bom e matei aquele porco imundo!’. O guarda olha de forma sarcástica e, com sorriso no rosto, diz: \n"
+						+ "‘então deveria melhorar sua mira na próxima, pois ele está vivo!’.\n\n"
+						+ nome
+						+ ", enlouquecido, exprime: ‘Não!...Não!...Não!...’.\n\n"
+						+ "Em seu carro, Karl Rahnner vai à outro lado da cidade, entra numa mansão abandonada, recepcionado por Joe Clin e vê toda a sua facção, \n"
+						+ "todos os criminosos da cidade. Todos param para ouvi-lo.\n\n"
+						+ "\nKarl Rahnner, que era o verdadeiro chefe de tudo, o orquestrador de toda a onda de crimes na cidade,\n"
+						+ "Exclama em alto e bom tom: ‘QUE COMECE O PLANO B!...’\n\n"
+						+ "\nFim de Jogo! Nos encontramos no próximo capítulo de Dark Cases of MiddleTown: Generation of Chaos...\n");
+	}
+}
